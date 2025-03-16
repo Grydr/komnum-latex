@@ -1,8 +1,16 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper, margin=1in]{geometry}
-\usepackage[output-decimal-marker={,}]{siunitx}
+\usepackage{siunitx}
 \usepackage{amsmath}
+
+\sisetup{
+    input-ignore={.},
+    output-decimal-marker={,},
+    group-minimum-digits=4,
+    group-separator={.},
+    group-digits=integer
+}
 
 \title{\textbf{Komputasi Numerik: Tugas x}}
 \author{Kelompok 15}
