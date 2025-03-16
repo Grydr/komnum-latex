@@ -1,0 +1,369 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{esdiff}
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\sisetup{
+    input-ignore={.},
+    output-decimal-marker={,},
+    group-minimum-digits=4,
+    group-separator={.},
+    group-digits=integer
+}
+
+\newcommand{\penyelesaian}{\textbf{Penyelesaian: }}
+
+\title{\textbf{Komputasi Numerik: Tugas 1}}
+\author{Kelompok 15}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Berapa jumlah (dan sebutkan) bilangan angka berarti dari bilangan berikut:
+    \begin{enumerate}
+        \item $\num{0,84e2}$ \\
+        \penyelesaian Dalam notasi saintifik, koefisien menunjukkan angka berarti.
+        Dengan demikian, ada dua bilangan angka berarti, yakni 8 dan 4.
+
+        \item $\num{70,0}$ \\
+        \penyelesaian Tiga angka berarti, yakni 7, 0, dan 0.
+
+        \item $\num{0,04600}$ \\
+        \penyelesaian Empat angka berarti, yakni 4, 6, 0, dan 0.
+        
+        \item $\num{0,00460}$ \\
+        \penyelesaian Tiga angka berarti, yakni 4, 6, dan 0.
+
+        \item $\num{8,0e3}$ \\
+        \penyelesaian Dua angka berarti, yakni 8 dan 0.
+        
+        \item $\num{8.000}$ \\
+        \penyelesaian Satu angka berarti, yaitu 1.
+    \end{enumerate}
+
+    \item Bulatkan bilangan berikut hingga tiga angka berarti:
+    \begin{enumerate}
+        \item $\num{8.755}$ \\ 
+        \penyelesaian $\num{8.755} \approx \num{8.76}$
+
+        \item $\num{0,368124e2}$ \\
+        \penyelesaian $\num{0,368124e2} \approx \num{0,368e2}$
+
+        \item $\num{4.255,0002}$ \\
+        \penyelesaian $\num{4.255,0002} \approx \num{4.260}$
+
+        \item $\num{5,445e3}$ \\
+        \penyelesaian $\num{5,445e3} \approx \num{5,44e3}$
+
+        \item $\num{0,999500}$ \\
+        \penyelesaian $\num{0,999500} \approx \num{1,00}$
+
+        \item $\num{48,365}$ \\
+        \penyelesaian $\num{48,365} \approx \num{48,4}$
+    \end{enumerate}
+
+    \item Operasikan bilangan-bilangan berikut dan tuliskan hasilnya dengan jumlah bilangan berarti yang benar:
+    \begin{enumerate}
+        \item $\num{0,00432} + (\num{25,1e-3}) + (\num{10,322e-2})$ \\
+        \penyelesaian
+        \begin{align*}
+            \num{0,00432} + (\num{25,1e-3}) + (\num{10,322e-2})
+            &= \num{0,00432} + (\num{0,0251}) + (\num{0,10322}) \\
+            &= \num{0,00432} + (\num{0,0251}) + (\num{0,1032}) \\
+            &= \num{0,13262} \\
+            &\approx \num{0,133}
+        \end{align*}
+
+        \item $(\num{4,68e6}) - (\num{8,2e2})$ \\
+        \penyelesaian
+        \begin{align*}
+            (\num{4,68e6}) - (\num{8,2e2})
+            &= \num{4680000} - \num{820} \\
+            &= \num{4680000} - \num{1000}\\
+            &= \num{4679000} \\
+            &\approx \num{4,68e6}
+        \end{align*}
+
+        \item $(\num{7,7e-5}) - (\num{5,409e-6}) + (\num{7,0e-4})$ \\
+        \penyelesaian
+        \begin{align*}
+            (\num{7,7e-5}) - (\num{5,409e-6}) + (\num{7,0e-4})
+            &= (\num{0,77e-4}) - (\num{0,05409e-4}) + (\num{7,0e-4}) \\
+            &= (\num{0,77e-4}) - (\num{0,054e-4}) + (\num{7,0e-4}) \\
+            &= (\num{7,716e-4}) \\
+            &\approx \num{7,7e-4}
+        \end{align*}
+
+        \item $(\num{8,38e5}) \times (\num{6,9e-5})$ \\
+        \penyelesaian $(\num{8,38e5}) \times (\num{6,9e-5}) = \num{57,822e0} \approx \num{5,8e1}$
+
+        \item $\left| (\num{8,38e4}) \times (\num{6,90e-4}) \right|$ \\
+        \penyelesaian $(\num{8,38e4}) \times (\num{6,90e-4}) = \num{57,822e0} \approx \num{5,78e1}$
+
+        \item $\left[(\num{4,68e-6}) - (\num{4,45e-5})\right] / {(\num{7,777e3})} + \num{9,6}$ \\
+        \penyelesaian
+        \begin{align*}
+            \frac{\left[(\num{4,68e-6}) - (\num{4,45e-5})\right]}{(\num{7,777e3})} + \num{9,6} 
+            &= \frac{\left[(\num{4,68e-6}) - (\num{44,5e-6})\right]}{\num{7777}} + \num{9,6} \\
+            &= \frac{\left[\num{-39,82e-6}\right]}{\num{7777}} + \num{9,6} \\
+            &= \frac{\left[\num{-39,8e-6}\right]}{\num{7777}} + \num{9,6} \\
+            &= \num{-0,005} + \num{9,6} \\
+            &= \num{9,595} \\
+            &\approx \num{9,6}
+        \end{align*}
+
+        \item $\left[(\num{4,81e-3})/\left[(\num{6,9134e3}) + \num{32,26}\right]\right] - \num{6,7845e-6}$ \\
+        \penyelesaian
+        \begin{align*}
+            \left[ \frac{(\num{4,81e-3})}{\left[(\num{6,9134e3}) + \num{32,26}\right]} \right] - \num{6,7845e-6}
+            &= \left[ \frac{(\num{4,81e-3})}{\num{6913,4} + \num{32,26}} \right] - \num{6,7845e-6} \\
+            &= \left[ \frac{(\num{4,81e-3})}{\num{6945,66}} \right] - \num{6,7845e-6} \\
+            &= \left[ \frac{(\num{4,81e-3})}{\num{6945,7}} \right] - \num{6,7845e-6} \\
+            &= \num{0,692e-6} - \num{6,7845e-6} \\
+            &= \num{-6,0925e-6} \\
+            &\approx \num{-6,092e-6} \\
+        \end{align*}
+
+        \item $\left[\num{58,6} \times (\num{12e-6}) - (\num{208e-6}) \times \num{1.801}\right]/(\num{468,94e-6})$ \\
+        \penyelesaian
+        \begin{align*}
+            \frac{\num{58,6} \times (\num{12e-6}) - (\num{208e-6}) \times \num{1.801}}{(\num{468,94e-6})} 
+            &= \frac{\num{703,2e-6} - (\num{374608e-6})}{(\num{468,94e-6})} \\
+            &= \frac{\num{7,0e-4} - (\num{3,75e-1})}{(\num{468,94e-6})} \\
+            &= \frac{\num{0,0007e0} - \num{0,375e0}}{(\num{468,94e-6})} \\
+            &= \frac{\num{0,0007e0} - \num{0,38e0}}{(\num{468,94e-6})} \\
+            &= \frac{\num{-0,3793e0}}{(\num{468,94e-6})} \\
+            &= \num{-8,0884e2} \\
+            &\approx \num{-8,088e2}
+        \end{align*}
+    \end{enumerate}
+
+    \item Gunakan perluasan deret Taylor orde ke-0 sampai orde ke-4 untuk menaksir nilai $f(2)$ dari fungsi $f(x) = e^{-x}$.  
+    Gunakan titik basis perhitungan $x = 1$. Hitung kesalahan relatif untuk setiap langkah aproksimasi. \\
+    \penyelesaian Diambil $e \approx \num{2,718}$, sehingga nilai $f(2)$ yang sebenarnya adalah $e^{-2} \approx \num{0,1354}$. \\
+
+    Ekspansi deret Taylor orde ke-$n$ di titik basis $x = 1$:
+    \begin{equation*}
+        T_n(x) = \sum_{i=0}^{n}\frac{f^{(i)}(1)(x-1)^i}{i!}.
+    \end{equation*}
+
+    Turunan $f(x)$ hingga orde keempat yakni sebagai berikut:
+    \begin{itemize}  
+        \item $f'(x)\big|_{x=1} = -e^{-x}\big|_{x=1} = -e^{-1} \approx \num{-0,3679}$
+        \item $f''(x)\big|_{x=1} = e^{-x}\big|_{x=1} = e^{-1} \approx \num{0,3679}$
+        \item $f'''(x)\big|_{x=1} = -e^{-x}\big|_{x=1} = -e^{-1} \approx \num{-0,3679}$  
+        \item $f^{(4)}(x)\big|_{x=1} = e^{-x} \big|_{x=1} = e^{-1} \approx \num{0,3679}$  
+    \end{itemize}
+
+    Deret Taylor dari orde ke-0 sampai ke orde ke-4 diperoleh sebagai berikut. \\
+
+    \textbf{Orde ke-0:} 
+    \begin{equation*}
+        T_0(2) = f(1) = e^{-1} \approx \num{0,3679}.
+    \end{equation*}
+    Kesalahan relatif: 
+    \begin{equation*}
+        E_r = \frac{\left|\num{0,1354} - \num{0,3679}\right|}{0,1354} \times 100\% \approx \num{171,7}\%
+    \end{equation*}
+
+    \textbf{Orde ke-1:} 
+    \begin{equation*}
+        T_1(2) = f(1) + f'(1)(2-1) = (e^{-1}) + (-e^{-1})(1) = e^{-1} - e^{-1} = 0.
+    \end{equation*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|0,1354 - 0\right|}{0,1354} \times 100\% = 100\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-2:} 
+    \begin{align*}
+        T_2(2) 
+        &= f(1) + f'(1)(2-1) + \frac{f''(1)(2-1)^2}{2!} \\
+        &= \frac{e^{-1}}{2}(2-1)^2 \\
+        &= \frac{e^{-1}}{2} \\
+        &\approx \num{0,1839}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|0,1354 - 0,1839\right|}{0,1354} \times 100\% \approx \num{35,9}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-3:} 
+    \begin{align*}
+        T_3(2) 
+        &= f(1) + f'(1)(2-1) + \frac{f''(1)(2-1)^2}{2!} + \frac{f'''(1)(2-1)^3}{3!}\\
+        &= \frac{e^{-1}}{2} - \frac{e^{-1}}{6}(2-1)^3 \\
+        &= \frac{e^{-1}}{2} - \frac{e^{-1}}{6} \\
+        &= \frac{3e^{-1}}{6} - \frac{e^{-1}}{6} \\
+        &= \frac{e^{-1}}{3} \\ 
+        &\approx \num{0,1226}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|0,1354 - 0,1226\right|}{0,1354} \times 100\% \approx \num{9,4}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-4:} 
+    \begin{align*}
+        T_4(2) 
+        &= f(1) + f'(1)(2-1) + \frac{f''(1)(2-1)^2}{2!} + \frac{f'''(1)(2-1)^3}{3!} + \frac{f^{(4)}(1)(2-1)^4}{4!}\\
+        &= \frac{e^{-1}}{3} + \frac{e^{-1}}{24}(2-1)^4 \\
+        &= \frac{e^{-1}}{3} + \frac{e^{-1}}{24} \\
+        &= \frac{8e^{-1}}{24} + \frac{e^{-1}}{24} \\
+        &= \frac{9e^{-1}}{24} \\
+        &\approx \num{0,1379}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|0,1354 - 0,1379\right|}{0,1354} \times 100\% \approx \num{1,85}\%.
+    \end{equation*}
+
+    \item Gunakan perluasan deret Taylor orde ke-0 sampai orde ke-3 untuk menaksir nilai $f(3)$ dari fungsi $f(x) = 25x^3 - 6x^2 + 7x - 88$.  
+    Gunakan titik basis perhitungan $x = 2$. Hitung kesalahan relatif untuk setiap langkah aproksimasi. \\
+    \penyelesaian Nilai $f(3)$ sebenarnya adalah $f(3) = 25(3)^3 - 6(3)^2 + 7(3) - 88 = 554$.
+
+    Ekspansi deret Taylor orde ke-$n$ di titik basis $x = 2$:
+    \begin{equation*}
+        T_n(x) = \sum_{i=0}^{n}\frac{f^{(i)}(2)(x-2)^i}{i!}.
+    \end{equation*}
+
+    Turunan $f(x)$ hingga orde ketiga, yakni sebagai berikut:
+    \begin{itemize}
+        \item $f'(x)\big|_{x=2} = (75x^2 - 12x + 7)\big|_{x=2} = 75(2)^2 - 12(2) + 7 = 283$ 
+        \item $f''(x)\big|_{x=2} = (150x - 12)\big|_{x=2} = 150(2) - 12 = 288$
+        \item $f'''(x)\big|_{x=3} = 150$
+    \end{itemize}
+
+    Deret Taylor dari orde ke-0 sampai ke orde ke-3 diperoleh sebagai berikut. \\
+
+    \textbf{Orde ke-0:} 
+    \begin{equation*}
+        T_0(3) = f(2) = 25(2)^3 - 6(2)^2 + 7(2) - 88 = 102.
+    \end{equation*}
+    Kesalahan relatif: 
+    \begin{equation*}
+        E_r = \frac{\left|554 - 102\right|}{554} \times 100\% \approx \num{81,6}\%
+    \end{equation*}
+
+    \textbf{Orde ke-1:} 
+    \begin{equation*}
+        T_1(3) = f(2) + f'(2)(3-2) = (102) + (283)(1) = 102 + 283 = 385.
+    \end{equation*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|554 - 385\right|}{554} \times 100\% \approx \num{30,5}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-2:} 
+    \begin{align*}
+        T_2(3) 
+        &= f(2) + f'(2)(3-2) + \frac{f''(2)(3-2)^2}{2!} \\
+        &= 385 + \frac{(288)(1)^2}{2} \\
+        &= 385 + 144 \\
+        &= 529
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|554 - 529\right|}{554} \times 100\% \approx \num{4,51}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-3:} 
+    \begin{align*}
+        T_3(3) 
+        &= f(2) + f'(2)(3-2) + \frac{f''(2)(3-2)^2}{2!} + \frac{f'''(2)(3-2)^3}{3!} \\
+        &= 529 + \frac{(150)(1)^3}{6} \\
+        &= 529 +  25\\
+        &= 554 \\ 
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|554 - 554\right|}{554} \times 100\% = \num{0,00}\%.
+    \end{equation*}
+
+    \item Gunakan perluasan deret Taylor orde ke-0 sampai orde ke-4 untuk menaksir nilai $f(4)$ dari fungsi $f(x) = \ln x$.  
+    Gunakan titik basis perhitungan $x = 2$. Hitung kesalahan relatif untuk setiap langkah aproksimasi. \\
+    \penyelesaian Diambil $\ln{4} \approx \num{1,3863}$, sehingga nilai $f(4)$ sebenarnya adalah $f(4) = \ln{4} \approx \num{1,3863}$. \\
+    
+    Ekspansi deret Taylor orde ke-$n$ di titik basis $x = 2$:
+    \begin{equation*}
+        T_n(x) = \sum_{i=0}^{n}\frac{f^{(i)}(2)(x-2)^i}{i!}.
+    \end{equation*}
+    
+    Turunan $f(x)$ hingga orde keempat, yakni sebagai berikut:
+    \begin{itemize}
+        \item $f'(x)\big|_{x=2} = \frac{1}{x} \big|_{x=2} = \frac{1}{2}$
+        \item $f''(x)\big|_{x=2} = -\frac{1}{x^2} \big|_{x=2} = -\frac{1}{4}$
+        \item $f'''(x)\big|_{x=2} = \frac{2}{x^3} \big|_{x=2} = \frac{2}{8} = \frac{1}{4}$
+        \item $f^{(4)}(x)\big|_{x=2} = -\frac{6}{x^4} \big|_{x=2} = -\frac{6}{16} = -\frac{3}{8}$
+    \end{itemize}
+    
+    Deret Taylor dari orde ke-0 sampai ke orde ke-4 diperoleh sebagai berikut. \\
+    
+    \textbf{Orde ke-0:} 
+    \begin{equation*}
+        T_0(4) = f(2) = \ln{2} \approx \num{0,6932}.
+    \end{equation*}
+    Kesalahan relatif: 
+    \begin{equation*}
+        E_r = \frac{\left|\num{1,3863} - \num{0,6932}\right|}{\num{1,3863}} \times 100\% \approx \num{50,00}\%
+    \end{equation*}
+    
+    \textbf{Orde ke-1:} 
+    \begin{equation*}
+        T_1(4) = f(2) + f'(2)(4-2) = \num{0,6932} + \frac{1}{2}(2) = \num{0,6932} + 1 \approx \num{1,6932}.
+    \end{equation*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|\num{1,3863} - \num{1,6932}\right|}{\num{1,3863}} \times 100\% \approx \num{22,09}\%    
+    \end{equation*}
+    
+    \textbf{Orde ke-2:} 
+    \begin{align*}
+        T_2(4) 
+        &= f(2) + f'(2)(4-2) + \frac{f''(2)(4-2)^2}{2!} \\
+        &= \num{1,6932} - \frac{1}{2} \\
+        &= \num{1,1932}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|\num{1,3863} - \num{1,1932}\right|}{\num{1,3863}} \times 100\% \approx \num{13,94}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-3:} 
+    \begin{align*}
+        T_3(4) 
+        &= f(2) + f'(2)(4-2) + \frac{f''(2)(4-2)^2}{2!} + \frac{f'''(2)(4-2)^3}{3!} \\
+        &= \num{1,1932} + \frac{1}{4}(8) \cdot \frac{1}{6} \\
+        &= \num{1,1932} + \frac{1}{3} \\
+        &= \num{1,5265}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|\num{1,3863} - \num{1,5265}\right|}{\num{1,3863}} \times 100\% \approx \num{10,13}\%.
+    \end{equation*}
+    
+    \textbf{Orde ke-4:} 
+    \begin{align*}
+        T_4(4) 
+        &= f(2) + f'(2)(4-2) + \frac{f''(2)(4-2)^2}{2!} + \frac{f'''(2)(4-2)^3}{3!} + \frac{f^{(4)}(2)(4-2)^4}{4!} \\
+        &= \num{1,5265} - \frac{3}{8} \cdot \frac{16}{24} \\
+        &= \num{1,2765}
+    \end{align*}
+    Kesalahan relatif:
+    \begin{equation*}
+        E_r = \frac{\left|\num{1,3863} - \num{1,2765}\right|}{\num{1,3863}} \times 100\% = \num{7,92}\%.
+    \end{equation*}    
+\end{enumerate}
+
+\end{document}
