@@ -30,20 +30,52 @@
 \maketitle
 
 \begin{enumerate}
-    \item Soal 5
+    \item Buatlah suatu analisa mengenai metode yang memiliki tingkat akurasi \& presisi yang paling tinggi dalam menyelesaikan persamaan berikut : \\
+    \ $f(x) = \frac{(1 - 0,6x)}{x}$ \\
+    \ perhitungan dibuat sampai 3 iterasi dengan $x_0$ = 2.
     \begin{enumerate}
-        \item Subsoal (a) \\
-        \penyelesaian Penyelesaian soal 1 subsoal (a)
+        \item Metode Tabulasi: \\
+        \penyelesaian   \[
+                        \begin{array}{|c|c|}
+                        \hline
+                        x & f(x) = \frac{1 - 0.6x}{x} \\
+                        \hline
+                        1.0 & \frac{1 - 0.6(1.0)}{1.0} = 0.4 \\
+                        1.5 & \frac{1 - 0.6(1.5)}{1.5} = 0.2 \\
+                        2.0 & \frac{1 - 0.6(2.0)}{2.0} = -0.1 \\
+                        2.5 & \frac{1 - 0.6(2.5)}{2.5} = -0.24 \\
+                        \hline
+                        \end{array}
+                        \]
 
-        \item Subsoal (b) \\
-        \penyelesaian Penyelesaian soal 1 subsoal (b)
+        \item Metode Bolzano: \\
+        \penyelesaian   \[
+                        \begin{array}{|c|c|c|}
+                        \hline
+                        x & f(x) = \frac{1 - 0.6x}{x} & \text{Tanda} \\
+                        \hline
+                        1.5 & \frac{1 - 0.6(1.5)}{1.5} = 0.2 & + \\
+                        2.0 & \frac{1 - 0.6(2.0)}{2.0} = -0.1 & - \\
+                        \hline
+                        \end{array}
+                        \]
 
-        \item Subsoal (c) \\
-        \penyelesaian  Penyelesaian soal 1 subsoal (c)
+        \item Metode Regula Falsi: \\
+        \penyelesaian   \[
+                        \begin{array}{|c|c|c|}
+                        \hline
+                        \text{Iterasi} & x & f(x) = \frac{1 - 0.6x}{x} \\
+                        \hline
+                        1 & 0 & 2.0 \\
+                        2 & 1 & 0.4 \\
+                        3 & 1.25 & 0.2 \\
+                        4 & 1.5 & 0.066667 \\
+                        \hline
+                        \end{array}
+                        \]
+
     \end{enumerate}
 
-    \item Soal 2
-    \penyelesaian Penyelesaian soal 2
 \end{enumerate}
 
 \end{document}
