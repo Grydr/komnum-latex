@@ -60,43 +60,66 @@
 \maketitle
 
 \begin{enumerate}
-    \item Soal 1 \\
+    \item Dapatkan akar-akar persamaan berikut: 
+    \begin{enumerate}
+        \item $x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0$
+        \item $x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0$
+    \end{enumerate}
+    Dengan metode Iterasi. \\
     \penyelesaian Penyelesaian soal 1
 
-    \item Soal beranak
+    \item Dapatkan akar-akar persamaan berikut: 
     \begin{enumerate}
-        \item Subsoal (a) \\
-        \penyelesaian Penyelesaian soal 1 subsoal (a)
-
-        \item Subsoal (b) \\
-        \penyelesaian Penyelesaian soal 1 subsoal (b)
-
-        \item Subsoal (c) \\
-        \penyelesaian  Penyelesaian soal 1 subsoal (c)
+        \item $x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0$
+        \item $x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0$
     \end{enumerate}
+    Dengan metode Faktorisasi. \\
+    \penyelesaian Penyelesaian soal 2
 
-    \item Soal grafik \\
-    \penyelesaian \\
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis}[grid=both,ymin=-0.5,ymax=3.5,xmax=3.5,xmin=-3.5,
-                        minor tick num=1,axis lines = middle,xlabel=$x$,ylabel=$y$]
-                \addplot[color=red, thick, samples=100]{x^3};
-            \end{axis}
-        \end{tikzpicture}
-    \end{center}
-
-    \item Soal algoritma \\
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{0,875}x^2 + \num{1,75}x + \num{2,625}
+    \end{equation*}
+    dengan $x_i = \num{3,1}$ \\
     \penyelesaian
-    \begin{lstlisting}[style=code,language=c]
-#include <iostream>
 
-int main() {
-    printf("Hello World!");
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{2,1} + \num{6,21}x - \num{3,9}x^2 + \num{0,667}x^3
+    \end{equation*}
+    \penyelesaian
 
-        return 0;
-}
-    \end{lstlisting}
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{23,33} + \num{79,35}x - \num{88,09}x^2 + \num{41,6}x^3 - \num{8,68}x^4 + \num{0,658}x^5
+    \end{equation*}
+    dengan $x_i = \num{3,5}$ \\
+    \penyelesaian
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = \num{9,36} - \num{21,963}x + \num{16,2965}x^2 - \num{3,70377}x^3
+    \end{equation*}
+    \penyelesaian
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = x^4 - \num{8,6}x^3 - \num{35,51}x^2 + \num{464}x - \num{998,46}
+    \end{equation*}
+    dengan $x_{i-1} = \num{7}$ dan $x_i = \num{9}$ \\
+    \penyelesaian
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = x^3 - \num{6}x^2 + \num{11}x - \num{6}
+    \end{equation*}
+    dengan $x_{i-1} = \num{2,5}$ dan $x_i = \num{3,6}$ \\
+    \penyelesaian
+
+    \item Buatlah sebuah paparan untuk menjelaskan tentang metode Bairstow dan metode Quotient-Difference (Q-D). 
+    Dan buatlah sebuah kesimpulan mengenai kemudahan/kesulitan kedua metode tersebut didalam menyelesaikan masalah dibanding dengan metode2 yang telah anda pelajari dalam materi ini. \\
+    \penyelesaian
+
 \end{enumerate}
 
 \end{document}
