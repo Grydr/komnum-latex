@@ -8,6 +8,7 @@
 \usepackage{pgfplots}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{booktabs}
 
 \pgfplotsset{compat=1.18, width=10cm}
 
@@ -83,11 +84,116 @@
     dengan $x_i = \num{3,1}$ \\
     \penyelesaian
 
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = \num{3,1} \\
+        f(x) & = -\num{0,875}x^2 + \num{1,75}x + \num{2,625} \\
+        f'(x) & = -\num{1,75}x + \num{1,75} \\ 
+    \end{split}
+    \end{equation*}
+
+    Nilai awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{3,1}) & = -\num{0,875}(\num{3,1})^2 + \num{1,75}(\num{3,1}) + \num{2,625} = -\num{0,35875} \\
+        f'(\num{3,1}) & = -\num{1,75}(\num{3,1}) + \num{1,75} = -\num{3,675} \\
+    \end{split}
+    \end{equation*}
+
+    Iterasi Newton-Raphson: \\
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+
+    Iterasi 1: \\
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = \num{3,1} - \frac{-\num{0,3587}}{-\num{3,675}} \\
+        & = \num{3,0024} \\
+        E_r & = \frac{\|3,0024 - 3,1\|}{3,0024} \times 100\% \\
+        & = \num{3,25}\% \\
+    \end{split}
+    \end{equation*} \\
+
+    Iterasi selanjutnya dirangkum dalam tabel berikut: 
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 3,1000 & 3,0024 & 3,25 \\
+            2 & 3,0024 & 3,0000 & 0,08 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:iterasi}
+    \end{table} \\ \\
+
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah: \\
+    \begin{equation}
+        x \approx 3,0000
+    \end{equation}
+
     \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
     \begin{equation*}
         f(x) = -\num{2,1} + \num{6,21}x - \num{3,9}x^2 + \num{0,667}x^3
     \end{equation*}
     \penyelesaian
+
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = 0 \\
+        f(x) & = -\num{2,1} + \num{6,21}x - \num{3,9}x^2 + \num{0,667}x^3 \\
+        f'(x) & = \num{6,21} - \num{7,8}x + \num{2,001}x^2
+    \end{split}
+    \end{equation*}
+
+    Nilai Awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{0}) & = -\num{2,1} + \num{6,21}(0) - \num{3,9}(0)^2 + \num{0,667}(0)^3 = -\num{2,1} \\
+        f'(\num{0}) & = \num{6,21} - \num{7,8}(0) + \num{2,001}(0)^2 = \num{6,21}
+    \end{split}
+    \end{equation*}
+
+    Iterasi Newton-Raphson:
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+
+    Iterasi 1: \\
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = 0 - \frac{-\num{2,1}}{\num{6,21}} = \num{0,3381} \\
+        E_r & = \frac{|0,3381 - 0|}{0,3381} \times 100\% = \num{100}\%
+    \end{split}
+    \end{equation*}
+
+    Iterasi selanjutnya dirangkum dalam tabel berikut:
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 0,0000 & 0,3381 & 100,00 \\
+            2 & 0,3381 & 0,5542 & 38,98 \\
+            3 & 0,5542 & 0,6934 & 20,10 \\
+            4 & 0,6934 & 0,7436 & 6,76 \\
+            5 & 0,7436 & 0,7472 & 0,48 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:iterasi2}
+    \end{table}
+
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah:
+    \begin{equation}
+        x \approx 0,7472
+    \end{equation}
+
 
     \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
     \begin{equation*}
@@ -95,6 +201,56 @@
     \end{equation*}
     dengan $x_i = \num{3,5}$ \\
     \penyelesaian
+
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = \num{3,5} \\
+        f(x) & = -\num{23,33} + \num{79,35}x - \num{88,09}x^2 + \num{41,6}x^3 - \num{8,68}x^4 + \num{0,658}x^5 \\
+        f'(x) & = \num{79,35} - \num{176,18}x + \num{124,8}x^2 - \num{34,72}x^3 + \num{3,29}x^4
+    \end{split}
+    \end{equation*}
+    
+    Nilai Awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{3,5}) & = -\num{23,33} + \num{79,35}(3,5) - \num{88,09}(3,5)^2 + \num{41,6}(3,5)^3 - \num{8,68}(3,5)^4 + \num{0,658}(3,5)^5 \approx -\num{3,7975} \\
+        f'(\num{3,5}) & = \num{79,35} - \num{176,18}(3,5) + \num{124,8}(3,5)^2 - \num{34,72}(3,5)^3 + \num{3,29}(3,5)^4 \approx -\num{20,9435}
+    \end{split}
+    \end{equation*}
+    
+    Iterasi Newton-Raphson:
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+    
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = 3,5 - \frac{-\num{3,7975}}{-\num{20,9435}} \approx 3,3187 \\
+        E_r & = \frac{|\num{3,3187} - \num{3,5}|}{\num{3,3187}} \times 100\% = \num{5,46}\%
+    \end{split}
+    \end{equation*}
+    
+    Iterasi selanjutnya dirangkum dalam tabel berikut:
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 3,5000 & 3,3187 & 5,46 \\
+            2 & 3,3187 & 3,2704 & 1,46 \\
+            3 & 3,2704 & 3,2689 & 0,05 \\
+            \bottomrule
+        \end{tabular}
+        \caption{Hasil iterasi Newton-Raphson untuk soal nomor 3}
+        \label{tab:iterasi3}
+    \end{table}
+    
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah:
+    \begin{equation}
+        x \approx 3,2689
+    \end{equation}
 
     \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
     \begin{equation*}
