@@ -1,0 +1,495 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{esdiff}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+
+\pgfplotsset{compat=1.18, width=10cm}
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\sisetup{
+    input-ignore={.},
+    output-decimal-marker={,},
+    group-minimum-digits=4,
+    group-separator={.},
+    group-digits=integer
+}
+
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+
+\lstdefinestyle{code}{
+    aboveskip={1.3\baselineskip},
+    basicstyle=\normalsize\ttfamily\linespread{4},
+    breaklines=false,
+    columns=fullflexible,
+    commentstyle=\color[rgb]{0.127,0.427,0.514}\ttfamily\itshape,
+    escapechar=@,
+    extendedchars=true,
+    frame=single,
+    identifierstyle=\color{black},
+    inputencoding=latin1,
+    keywordstyle=\color[HTML]{228B22}\bfseries,
+    ndkeywordstyle=\color[HTML]{228B22}\bfseries,
+    numbers=left,
+    numberstyle=\normalsize,
+    prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    stringstyle=\color[rgb]{0.639,0.082,0.082}\ttfamily,
+    upquote=true,
+    showstringspaces=false,
+    xleftmargin=5ex,
+    aboveskip=5pt
+}
+
+\newcommand{\penyelesaian}{\textbf{Penyelesaian: }}
+
+\title{\textbf{Komputasi Numerik: Tugas 3}}
+\author{Kelompok 15}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Dapatkan akar-akar persamaan berikut dengan metode Iterasi: 
+    \begin{enumerate}
+        \item $x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0$ \\
+        \penyelesaian Untuk melakukan metode Iterasi, $f(x) = 0$ harus diubah menjadi $x = g(x)$:
+        \begin{align*}
+            x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0 \\
+            \implies x = \frac{x^3 + \num{6,6}x^2 + \num{22,64}}{\num{29,05}}
+        \end{align*}
+        Dengan demikian, 
+        \begin{align*}
+            g(x) = \frac{x^3 + \num{6,6}x^2 + \num{22,64}}{\num{29,05}}    
+        \end{align*}
+
+        Dengan asumsi $x_0 = 1$, selanjutnya akan dicari tahu apakah nilai $x_0$ tersebut memenuhi syarat $|g'(x_0)| < 1$:
+        \begin{align*}
+            \left|g'(x_0)\right| &< 1 \\
+            \left|\frac{3(1)^2 + \num{13,2}(1)}{\num{29,05}}\right| &< 1 \\
+            \left|\frac{\num{16,2}}{\num{29,05}}\right| &< 1 \\
+            \num{0,55} &< 1
+        \end{align*}
+        Dengan demikian, dengan $x_0 = 1$, proses iterasi akan konvergen. \\
+
+        Dengan relasi berulang:
+        \begin{align*}
+            x_{n+1} = \frac{{x_n}^3 + \num{6,6}{x_n}^2 + \num{22,64}}{\num{29,05}}
+        \end{align*}
+        diperoleh hasil proses iterasi sebagai berikut: \\
+        \begin{tabular}{|c|c|c|}
+            \hline
+            n & $x_n$ & $x_{n+1}$ \\
+            \hline
+            0 & \num{1,000} & $\dfrac{\num{1,000}^3 + \num{6,6} \times \num{1,000}^2 + \num{22,64}}{\num{29,05}} = \num{1,040}$ \\
+            1 & \num{1,040} & $\dfrac{\num{1,040}^3 + \num{6,6} \times \num{1,040}^2 + \num{22,64}}{\num{29,05}} = \num{1,065}$ \\
+            2 & \num{1,065} & $\dfrac{\num{1,065}^3 + \num{6,6} \times \num{1,065}^2 + \num{22,64}}{\num{29,05}} = \num{1,080}$ \\
+            3 & \num{1,080} & $\dfrac{\num{1,080}^3 + \num{6,6} \times \num{1,080}^2 + \num{22,64}}{\num{29,05}} = \num{1,090}$ \\
+            4 & \num{1,090} & $\dfrac{\num{1,090}^3 + \num{6,6} \times \num{1,090}^2 + \num{22,64}}{\num{29,05}} = \num{1,095}$ \\
+            5 & \num{1,095} & $\dfrac{\num{1,095}^3 + \num{6,6} \times \num{1,095}^2 + \num{22,64}}{\num{29,05}} = \num{1,097}$ \\
+            \hline
+        \end{tabular} \\
+        Dengan demikian, akar dari persamaan di atas adalah $x \approx \num{1,097}$.
+        
+        \item $x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0$ \\
+        \penyelesaian $f(x) = 0 \iff x = g(x)$:
+        \begin{align*}
+            x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0 \\
+            \implies x = \frac{x^4 - \num{0,41}x^3 + \num{1,632}x^2 + \num{7,260}}{\num{9,146}} \\
+            \therefore g(x) = \frac{x^4 - \num{0,41}x^3 + \num{1,632}x^2 + \num{7,260}}{\num{9,146}}
+        \end{align*}
+    
+        Dengan asumsi $x_0 = 1$, selanjutnya akan dicari tahu apakah nilai $x_0$ tersebut memenuhi syarat $|g'(x_0)| < 1$:
+        \begin{align*}
+            \left|g'(x_0)\right| &< 1 \\
+            \left|\frac{4(1)^3 - \num{1,23}(1)^2 + \num{3,264}(1) - \num{9,146}}{\num{9,146}}\right| &< 1 \\
+            \left|\frac{\num{3,112}}{\num{9,146}}\right| &< 1 \\
+            \num{0,34} &< 1
+        \end{align*}
+        Dengan demikian, dengan $x_0 = 1$, proses iterasi akan konvergen. \\
+    
+        Dengan relasi berulang:
+        \begin{align*}
+            x_{n+1} = \frac{{x_n}^4 - \num{0,41}{x_n}^3 + \num{1,632}{x_n}^2 + \num{7,260}}{\num{9,146}}
+        \end{align*}
+        diperoleh hasil proses iterasi sebagai berikut: \\
+        \begin{tabular}{|c|c|c|}
+            \hline
+            n & $x_n$ & $x_{n+1}$ \\
+            \hline
+            0 & \num{1,000} & $\dfrac{\num{1,000}^4 - \num{0,41} \times \num{1,000}^3 + \num{1,632} \times \num{1,000}^2 + \num{7,260}}{\num{9,146}} = \num{1,037}$ \\
+            1 & \num{1,037} & $\dfrac{\num{1,037}^4 - \num{0,41} \times \num{1,037}^3 + \num{1,632} \times \num{1,037}^2 + \num{7,260}}{\num{9,146}} = \num{1,062}$ \\
+            2 & \num{1,062} & $\dfrac{\num{1,062}^4 - \num{0,41} \times \num{1,062}^3 + \num{1,632} \times \num{1,062}^2 + \num{7,260}}{\num{9,146}} = \num{1,078}$ \\
+            3 & \num{1,078} & $\dfrac{\num{1,078}^4 - \num{0,41} \times \num{1,078}^3 + \num{1,632} \times \num{1,078}^2 + \num{7,260}}{\num{9,146}} = \num{1,088}$ \\
+            4 & \num{1,088} & $\dfrac{\num{1,088}^4 - \num{0,41} \times \num{1,088}^3 + \num{1,632} \times \num{1,088}^2 + \num{7,260}}{\num{9,146}} = \num{1,094}$ \\
+            5 & \num{1,094} & $\dfrac{\num{1,094}^4 - \num{0,41} \times \num{1,094}^3 + \num{1,632} \times \num{1,094}^2 + \num{7,260}}{\num{9,146}} = \num{1,098}$ \\
+            \hline
+        \end{tabular} \\
+        Dengan demikian, akar dari persamaan di atas adalah $x \approx \num{1,098}$.
+    \end{enumerate}
+
+    \item Dapatkan akar-akar persamaan berikut dengan metode Faktorisasi: 
+    \begin{enumerate}
+        \item $x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0$ \\
+        \penyelesaian Persamaan tersebut memenuhi rumusan metode Faktorisasi derajat tiga.
+        Dengan $P_3(x) = x^3 + A_2x^2 + A_1x + A_0$, bentuk faktornya adalah $P_3(x) = (x + b_0)(x^2 + a_1x + a_0)$. \\
+
+        Dengan $P_3(x) = x^3 + \num{6,6}x^2 - \num{29,05}x + \num{22,64} = 0$ dan fakta bahwa $b_0 = A_0/a_0$, hasil proses iterasi diperoleh sebagai berikut: \\
+        \begin{tabular}{|c|r|r|r|l|}
+            \hline
+            \textbf{iterasi} & \multicolumn{1}{c|}{\textbf{b\textsubscript{0}}} & \multicolumn{1}{c|}{\textbf{a\textsubscript{1}}} & \multicolumn{1}{c|}{\textbf{a\textsubscript{0}}} & \textbf{keterangan} \\ \hline
+            1 & \num{0,000} & \num{6,600} & \num{-29,050} & Inisialisasi ($b_0 = 0$) \\ \hline
+            2 & \num{-0,779} & \num{7,379} & \num{-23,300} & $b_0 = \num{22,64}/(\num{-29,05})$ \\ \hline
+            3 & \num{-0,972} & \num{7,572} & \num{-21,690} & $b_0 = \num{22,64}/(\num{-23,30})$ \\ \hline
+            4 & \num{-1,044} & \num{7,644} & \num{-21,070} & $b_0 = \num{22,64}/(\num{-21,69})$ \\ \hline
+            5 & \num{-1,075} & \num{7,675} & \num{-20,800} & $b_0 = \num{22,64}/(\num{-21,07})$ \\ \hline
+            6 & \num{-1,088} & \num{7,688} & \num{-20,800} &  \\ \hline
+        \end{tabular} \\
+        Dengan demikian, diperoleh hasil faktorisasi: $P_3(x) \approx (x - \num{1,088})(x^2 + \num{7,688}x - \num{20,800})$. \\
+        
+        Akar-akar dari persamaan tersebut antara lain:
+        \begin{itemize}
+            \item $(x - \num{1,088}) = 0 \implies x \approx \num{1,088}$.
+            \item $(x^2 + \num{7,688}x - \num{20,800}) = 0$ \\
+            $ \implies x = \frac{-\num{7,688} \pm \sqrt{\num{7,688}^2 - 4 \times \num{-20,800}}}{2}$ \\
+            $ \therefore x \approx \num{2,121} \vee x \approx \num{-9,809}$.
+        \end{itemize} 
+        Dengan demikian, terdapat tiga akar berbeda, yakni $x_1 = \num{1,088}$, $x_2 = \num{2,121}$, dan $x_3 = \num{-9,809}$.
+
+
+        \item $x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0$ \\
+        \penyelesaian Persamaan tersebut memenuhi rumusan metode faktorisasi derajat empat.
+        Dengan $P_4(x) = x^4 + A_3x^3 + A_2x^2 + A_1x + A_0$, bentuk faktornya adalah $P_4(x) = (x^2 + b_1x + b_0)(x^2 + a_1x + a_0)$. \\
+        
+        Dengan $P_4(x) = x^4 - \num{0,41}x^3 + \num{1,632}x^2 - \num{9,146}x + \num{7,260} = 0$, hasil proses iterasi diperoleh sebagai berikut: \\
+        \begin{tabular}{|c|r|r|r|r|l|}
+            \hline
+            \textbf{iterasi} & \multicolumn{1}{c|}{\textbf{b\textsubscript{0}}} & \multicolumn{1}{c|}{\textbf{b\textsubscript{1}}} & \multicolumn{1}{c|}{\textbf{a\textsubscript{1}}} & \multicolumn{1}{c|}{\textbf{a\textsubscript{0}}} & \textbf{keterangan} \\ \hline
+            1 & \num{0,000} & \num{0,000} & \num{1,632} & \num{-9,146} & Inisialisasi ($b_0 = 0$) \\ \hline
+            2 & \num{-0,794} & \num{1,022} & \num{2,426} & \num{-7,260} & $b_0 = \num{7,260}/(\num{-9,146})$ \\ \hline
+            3 & \num{-1,012} & \num{1,305} & \num{2,644} & \num{-6,678} & $b_0 = \num{7,260}/(\num{-7,260})$ \\ \hline
+            4 & \num{-1,101} & \num{1,447} & \num{2,733} & \num{-6,400} & $b_0 = \num{7,260}/(\num{-6,678})$ \\ \hline
+            5 & \num{-1,145} & \num{1,518} & \num{2,777} & \num{-6,260} & $b_0 = \num{7,260}/(\num{-6,400})$ \\ \hline
+            6 & \num{-1,167} & \num{1,553} & \num{2,799} & \num{-6,200} & Konvergensi tercapai \\ \hline
+        \end{tabular} \\
+        Dengan demikian, diperoleh hasil faktorisasi:\\
+        $P_4(x) \approx (x^2 + \num{1,553}x - \num{1,167})(x^2 + \num{2,799}x + \num{6,200})$. \\
+        
+        Akar-akar dari persamaan tersebut antara lain:
+        \begin{itemize}
+            \item $(x^2 + \num{1,553}x - \num{1,167}) = 0$ \\
+            $ \implies x = \frac{-\num{1,553} \pm \sqrt{(\num{1,553})^2 - 4 \times \num{-1,167}}}{2}$ \\
+            $ \therefore x \approx \num{0,577} \vee x \approx \num{-2,130}$.
+        
+            \item $(x^2 + \num{2,799}x + \num{6,200}) = 0$ \\
+            $ \implies x = \frac{-\num{2,799} \pm \sqrt{(\num{2,799})^2 - 4 \times \num{6,200}}}{2}$ \\
+            $ \therefore x \approx \num{-1,400} + \num{1,825}i \vee x \approx \num{-1,400} - \num{1,825}i$.
+        \end{itemize} 
+        
+        Dengan demikian, terdapat empat akar berbeda, yakni $x_1 = \num{0,577}$, $x_2 = \num{-2,130}$, $x_3 = \num{-1,400} + \num{1,825}i$, dan $x_4 = \num{-1,400} - \num{1,825}i$.
+    \end{enumerate}
+
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{0,875}x^2 + \num{1,75}x + \num{2,625}
+    \end{equation*}
+    dengan $x_i = \num{3,1}$ \\
+    \penyelesaian
+
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = \num{3,1} \\
+        f(x) & = -\num{0,875}x^2 + \num{1,75}x + \num{2,625} \\
+        f'(x) & = -\num{1,75}x + \num{1,75} \\ 
+    \end{split}
+    \end{equation*}
+
+    Nilai awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{3,1}) & = -\num{0,875}(\num{3,1})^2 + \num{1,75}(\num{3,1}) + \num{2,625} = -\num{0,35875} \\
+        f'(\num{3,1}) & = -\num{1,75}(\num{3,1}) + \num{1,75} = -\num{3,675} \\
+    \end{split}
+    \end{equation*}
+
+    Iterasi Newton-Raphson: \\
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+
+    Iterasi 1: \\
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = \num{3,1} - \frac{-\num{0,3587}}{-\num{3,675}} \\
+        & = \num{3,0024} \\
+        E_r & = \frac{\|3,0024 - 3,1\|}{3,0024} \times 100\% \\
+        & = \num{3,25}\% \\
+    \end{split}
+    \end{equation*} \\
+
+    Iterasi selanjutnya dirangkum dalam tabel berikut: 
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 3,1000 & 3,0024 & 3,25 \\
+            2 & 3,0024 & 3,0000 & 0,08 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:iterasi}
+    \end{table} \\ \\
+
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah: \\
+    \begin{equation}
+        x \approx 3,0000
+    \end{equation}
+
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{2,1} + \num{6,21}x - \num{3,9}x^2 + \num{0,667}x^3
+    \end{equation*}
+    \penyelesaian
+
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = 0 \\
+        f(x) & = -\num{2,1} + \num{6,21}x - \num{3,9}x^2 + \num{0,667}x^3 \\
+        f'(x) & = \num{6,21} - \num{7,8}x + \num{2,001}x^2
+    \end{split}
+    \end{equation*}
+
+    Nilai Awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{0}) & = -\num{2,1} + \num{6,21}(0) - \num{3,9}(0)^2 + \num{0,667}(0)^3 = -\num{2,1} \\
+        f'(\num{0}) & = \num{6,21} - \num{7,8}(0) + \num{2,001}(0)^2 = \num{6,21}
+    \end{split}
+    \end{equation*}
+
+    Iterasi Newton-Raphson:
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+
+    Iterasi 1: \\
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = 0 - \frac{-\num{2,1}}{\num{6,21}} = \num{0,3381} \\
+        E_r & = \frac{|0,3381 - 0|}{0,3381} \times 100\% = \num{100}\%
+    \end{split}
+    \end{equation*}
+
+    Iterasi selanjutnya dirangkum dalam tabel berikut:
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 0,0000 & 0,3381 & 100,00 \\
+            2 & 0,3381 & 0,5542 & 38,98 \\
+            3 & 0,5542 & 0,6934 & 20,10 \\
+            4 & 0,6934 & 0,7436 & 6,76 \\
+            5 & 0,7436 & 0,7472 & 0,48 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:iterasi2}
+    \end{table}
+
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah:
+    \begin{equation}
+        x \approx 0,7472
+    \end{equation}
+
+
+    \item Gunakan metode Newton-Raphson untuk mendapatkan akar persamaan: \\
+    \begin{equation*}
+        f(x) = -\num{23,33} + \num{79,35}x - \num{88,09}x^2 + \num{41,6}x^3 - \num{8,68}x^4 + \num{0,658}x^5
+    \end{equation*}
+    dengan $x_i = \num{3,5}$ \\
+    \penyelesaian
+
+    Diketahui: \\
+    \begin{equation*}
+    \begin{split}
+        x_i & = \num{3,5} \\
+        f(x) & = -\num{23,33} + \num{79,35}x - \num{88,09}x^2 + \num{41,6}x^3 - \num{8,68}x^4 + \num{0,658}x^5 \\
+        f'(x) & = \num{79,35} - \num{176,18}x + \num{124,8}x^2 - \num{34,72}x^3 + \num{3,29}x^4
+    \end{split}
+    \end{equation*}
+    
+    Nilai Awal: \\
+    \begin{equation*}
+    \begin{split}
+        f(\num{3,5}) & = -\num{23,33} + \num{79,35}(3,5) - \num{88,09}(3,5)^2 + \num{41,6}(3,5)^3 - \num{8,68}(3,5)^4 + \num{0,658}(3,5)^5 \approx -\num{3,7975} \\
+        f'(\num{3,5}) & = \num{79,35} - \num{176,18}(3,5) + \num{124,8}(3,5)^2 - \num{34,72}(3,5)^3 + \num{3,29}(3,5)^4 \approx -\num{20,9435}
+    \end{split}
+    \end{equation*}
+    
+    Iterasi Newton-Raphson:
+    \begin{equation*}
+        x_{i+1} = x_i - \frac{f(x_i)}{f'(x_i)}
+    \end{equation*}
+    
+    \begin{equation*}
+    \begin{split}
+        x_{i+1} & = 3,5 - \frac{-\num{3,7975}}{-\num{20,9435}} \approx 3,3187 \\
+        E_r & = \frac{|\num{3,3187} - \num{3,5}|}{\num{3,3187}} \times 100\% = \num{5,46}\%
+    \end{split}
+    \end{equation*}
+    
+    Iterasi selanjutnya dirangkum dalam tabel berikut:
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Iterasi & $x_i$ & $x_{i+1}$ & Error Relatif (\%) \\
+            \midrule
+            1 & 3,5000 & 3,3187 & 5,46 \\
+            2 & 3,3187 & 3,2704 & 1,46 \\
+            3 & 3,2704 & 3,2689 & 0,05 \\
+            \bottomrule
+        \end{tabular}
+        \caption{Hasil iterasi Newton-Raphson untuk soal nomor 3}
+        \label{tab:iterasi3}
+    \end{table}
+    
+    Dari hasil iterasi, akar dari persamaan $f(x) = 0$ adalah:
+    \begin{equation}
+        x \approx 3,2689
+    \end{equation}
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = \num{9,36} - \num{21,963}x + \num{16,2965}x^2 - \num{3,70377}x^3
+    \end{equation*}
+    \penyelesaian Dengan $x_{i-1} = 0$ dan $x_i = 1$, maka: \\
+    $f(x_{i-1}) = f(0) = \num{9,36} - \num{21,963}(0) + \num{16,2965}(0)^2 - \num{3,70377}(0)^3 = \num{9,36}$ dan \\ 
+    $f(x_{i}) = f(1) = \num{9,36} - \num{21,963}(1) + \num{16,2965}(1)^2 - \num{3,70377}(1)^3 = \num{-0,01027}$. \\
+
+    Menggunakan metode Secant, dapat diperoleh hasil iterasi pertama:
+    \begin{align*}
+        x_{i+1} &= x_i - \frac{f(x_i)(x_{i-1} - x_i)}{f(x_{i-1}) - f(x_i)} \\
+        &= 1 - \frac{(-\num{0,01027})(-1)}{\num{9,36} - \num{0,01027}} \\
+        &= \num{0,99890}
+    \end{align*}
+
+    Dengan iterasi berikutnya hingga nilai $|f(x_i)|$ mendekati nol, diperoleh hasil sebagai berikut.\\
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        iterasi & $x_{i-1}$ & $x_i$ & $f(x_{i-1})$ & $f(x_i)$ & $x_{i+1}$ \\
+        \hline
+        1 & \num{0,00000} & \num{1,00000} & \num{9,36000} & \num{-0,01027} & \num{0,99890}\\
+        2 & \num{1,00000} & \num{0,99890} & \num{-0,01027} & \num{-0,00974} & \num{0,97891}\\
+        3 & \num{0,99890} & \num{0,97891} & \num{-0,00974} & \num{0,00222} & \num{0,98262}\\
+        4 & \num{0,97891} & \num{0,98262} & \num{0,00222} & \num{-0,00032} & \num{0,98215}\\
+        5 & \num{0,98262} & \num{0,98215} & \num{-0,00032} & \num{-0,00001} & \num{0,98214}\\
+        6 & \num{0,98215} & \num{0,98214} & \num{-0,00001} & \num{0,00000} & \num{0,98214}\\
+         \hline
+        \end{tabular} \\
+    Dengan demikian, akar dari $f(x)$ adalah $x \approx \num{0,98214}$.
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = x^4 - \num{8,6}x^3 - \num{35,51}x^2 + \num{464}x - \num{998,46}
+    \end{equation*}
+    dengan $x_{i-1} = \num{7}$ dan $x_i = \num{9}$ \\
+    \penyelesaian Dengan \\
+    $f(x_{i-1}) = f(7) = 7^4 - \num{8,6}(7)^3 - \num{35,51}(7)^2 + \num{464}(7) - \num{998,46} = \num{-39,25}$ dan \\
+    $f(x_i) = f(9) = 9^4 - \num{8,6}(9)^3 - \num{35,51}(9)^2 + \num{464}(9) - \num{998,46} = \num{592,83}$, \\
+    Menggunakan metode Secant, dapat diperoleh hasil iterasi pertama:
+    \begin{align*}
+        x_{i+1} &= x_i - \frac{f(x_i)(x_{i-1} - x_i)}{f(x_{i-1}) - f(x_i)} \\
+        &= 9 - \frac{(\num{529,83})(7 - 9)}{\num{-39,25} - \num{592,83}} \\
+        &= \num{7,12419}
+    \end{align*}
+
+    Dengan iterasi berikutnya hingga nilai $|f(x_i)|$ mendekati nol, diperoleh hasil sebagai berikut.\\
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        iterasi & $x_{i-1}$ & $x_i$ & $f(x_{i-1})$ & $f(x_i)$ & $x_{i+1}$ \\
+        \hline
+        1 & \num{7,00000} & \num{9,00000} & \num{-39,25000} & \num{592,83000} & \num{7,12419}\\
+        2 & \num{9,00000} & \num{7,12419} & \num{592,83000} & \num{-28,73897} & \num{7,21092}\\
+        3 & \num{7,12419} & \num{7,21092} & \num{-28,73897} & \num{-19,85323} & \num{7,40470}\\
+        4 & \num{7,21092} & \num{7,40470} & \num{-19,85323} & \num{5,03497} & \num{7,36550}\\
+        5 & \num{7,40470} & \num{7,36550} & \num{5,03497} & \num{-0,59129} & \num{7,36962}\\
+        6 & \num{7,36550} & \num{7,36962} & \num{-0,59129} & \num{-0,01458} & \num{7,36972}\\
+        7 & \num{7,36962} & \num{7,36972} & \num{-0,01458} & \num{0,00004} & \num{7,36972}\\
+        8 & \num{7,36972} & \num{7,36972} & \num{0,00004} & \num{-0,00000} & \num{7,36972}\\
+         \hline
+        \end{tabular} \\
+    Dengan demikian, akar dari $f(x)$ adalah $x \approx \num{7,36972}$.
+
+    \item Gunakan metode Secant untuk mendapatkan akar dari persamaan:
+    \begin{equation*}
+        f(x) = x^3 - \num{6}x^2 + \num{11}x - \num{6}
+    \end{equation*}
+    dengan $x_{i-1} = \num{2,5}$ dan $x_i = \num{3,6}$ \\
+    \penyelesaian Dengan \\
+    $f(x_{i-1}) = f(2,5) = (2,5)^3 - \num{6}(2,5)^2 + \num{11}(2,5) - \num{6} = \num{-0,375}$ dan \\
+    $f(x_i) = f(3,6) = (3,6)^3 - \num{6}(3,6)^2 + \num{11}(3,6) - \num{6} = \num{2,496}$. \\
+    Menggunakan metode Secant, dapat diperoleh hasil iterasi pertama:
+    \begin{align*}
+        x_{i+1} &= x_i - \frac{f(x_i)(x_{i-1} - x_i)}{f(x_{i-1}) - f(x_i)} \\
+        &= \num{3,6} - \frac{(\num{2,496})(\num{2,5} - \num{3,6})}{\num{-0,375} - \num{2,496}} \\
+        &= \num{2,64368}.
+    \end{align*}
+
+    Dengan iterasi berikutnya hingga nilai $|f(x_i)|$ mendekati nol, diperoleh hasil sebagai berikut.\\
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        iterasi & $x_{i-1}$ & $x_i$ & $f(x_{i-1})$ & $f(x_i)$ & $x_{i+1}$ \\
+        \hline
+        1 & \num{2,50000} & \num{3,60000} & \num{-0,37500} & \num{2,49600} & \num{2,64368}\\
+        2 & \num{3,60000} & \num{2,64368} & \num{2,49600} & \num{-0,37699} & \num{2,76917}\\
+        3 & \num{2,64368} & \num{2,76917} & \num{-0,37699} & \num{-0,31412} & \num{3,39610}\\
+        4 & \num{2,76917} & \num{3,39610} & \num{-0,31412} & \num{1,32505} & \num{2,88931}\\
+        5 & \num{3,39610} & \num{2,88931} & \num{1,32505} & \num{-0,18598} & \num{2,95169}\\
+        6 & \num{2,88931} & \num{2,95169} & \num{-0,18598} & \num{-0,08974} & \num{3,00985}\\
+        7 & \num{2,95169} & \num{3,00985} & \num{-0,08974} & \num{0,01999} & \num{2,99925}\\
+        8 & \num{3,00985} & \num{2,99925} & \num{0,01999} & \num{-0,00149} & \num{2,99999}\\
+        9 & \num{2,99925} & \num{2,99999} & \num{-0,00149} & \num{-0,00002} & \num{3,00000}\\
+        10 & \num{2,99999} & \num{3,00000} & \num{-0,00002} & \num{0,00000} & \num{3,00000}\\
+         \hline
+        \end{tabular} \\
+    Dengan demikian, akar dari $f(x)$ adalah $x \approx 3$.
+
+    \item Buatlah sebuah paparan untuk menjelaskan tentang metode Bairstow dan metode Quotient-Difference (Q-D). 
+    Dan buatlah sebuah kesimpulan mengenai kemudahan/kesulitan kedua metode tersebut didalam menyelesaikan masalah dibanding dengan metode2 yang telah anda pelajari dalam materi ini. \\
+    \penyelesaian
+    \begin{itemize}
+        \item Metode Bairstow \\
+        Metode Bairstow adalah metode numerik untuk mendapatkan akar polinomial, dapat berupa akar real maupun akar komples.
+        Metode ini menggunakan pendekatan iteratif dengan dua parameter $r$ dan $s$ dimana kedua parameter tersebut berkaitan dengan faktor kuadratik $x^2 + rx + s$ dari polinomial tersebut.
+        Pendekatan iteratif dilakukan dengan cara melakukan pembagian polinomial dan hasil pembagiannya terhadap $x^2 + rx + s$ terus menerus hingga sisa pembagian konvergen terhadap nol, dimana faktor-faktor kuadratiknya merupakan faktor paling sederhana.
+        \item Metode Quotient-Difference (Q-D) \\
+        Metode Q-D adalah metode numerik untuk mendapatkan akar polinomial yang lebih efisien, karena tidak memerlukan tebakan awal seperti metode-metode lain.
+        Metode ini menggunakan pendekatan iteratif dengan mengandalkan perhitungan rasio (quotient) dan selisih (difference) dari hasil pembagian antara polinomial dan faktornya.
+        Polinomial yang ingin dicari akar-akarnya akan dibagi dengan faktor linier, lalu selisih dan rasio dari pembagian tersebut dihitung untuk mendapatkan akar.
+        Proses ini dilakukan secara berulang-ulang hingga akar konvergen, yaitu ketika nilai-nilainya tidak berubah secara signifikan.
+    \end{itemize}
+
+    \textbf{Kesimpulan: } Dibandingkan dengan metode-metode lain kedua metode ini lebih mudah dilakukan oleh komputer karena lebih sistematis.
+    Namun, metode-metode lain masih tetap lebih mudah dilakukan. Misalnya Newton-Raphson dan Secant sangat efisien untuk menemukan akar tunggal, metode faktorisasi lebih baik jika faktor-faktor polinomial dapat ditemukan dengan mudah. Dari semua metode yang telah disebutkan, metode iterasi paling tidak efisien tetapi paling mudah untuk diterapkan.
+
+\end{enumerate}
+
+\end{document}
