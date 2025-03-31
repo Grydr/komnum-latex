@@ -3,3 +3,6 @@
 *.fls
 *.log
 *.dvi
+*.pdf
+*.pdf
+*.synctex.gz
