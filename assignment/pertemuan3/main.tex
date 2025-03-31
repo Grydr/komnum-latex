@@ -475,6 +475,21 @@
     \item Buatlah sebuah paparan untuk menjelaskan tentang metode Bairstow dan metode Quotient-Difference (Q-D). 
     Dan buatlah sebuah kesimpulan mengenai kemudahan/kesulitan kedua metode tersebut didalam menyelesaikan masalah dibanding dengan metode2 yang telah anda pelajari dalam materi ini. \\
     \penyelesaian
+    \begin{itemize}
+        \item Metode Bairstow \\
+        Metode Bairstow adalah metode numerik untuk mendapatkan akar polinomial, dapat berupa akar real maupun akar komples.
+        Metode ini menggunakan pendekatan iteratif dengan dua parameter $r$ dan $s$ dimana kedua parameter tersebut berkaitan dengan faktor kuadratik $x^2 + rx + s$ dari polinomial tersebut.
+        Pendekatan iteratif dilakukan dengan cara melakukan pembagian polinomial dan hasil pembagiannya terhadap $x^2 + rx + s$ terus menerus hingga sisa pembagian konvergen terhadap nol, dimana faktor-faktor kuadratiknya merupakan faktor paling sederhana.
+        \item Metode Quotient-Difference (Q-D) \\
+        Metode Q-D adalah metode numerik untuk mendapatkan akar polinomial yang lebih efisien, karena tidak memerlukan tebakan awal seperti metode-metode lain.
+        Metode ini menggunakan pendekatan iteratif dengan mengandalkan perhitungan rasio (quotient) dan selisih (difference) dari hasil pembagian antara polinomial dan faktornya.
+        Polinomial yang ingin dicari akar-akarnya akan dibagi dengan faktor linier, lalu selisih dan rasio dari pembagian tersebut dihitung untuk mendapatkan akar.
+        Proses ini dilakukan secara berulang-ulang hingga akar konvergen, yaitu ketika nilai-nilainya tidak berubah secara signifikan.
+    \end{itemize}
+
+    \textbf{Kesimpulan: } Dibandingkan dengan metode-metode lain kedua metode ini lebih mudah dilakukan oleh komputer karena lebih sistematis.
+    Namun, metode-metode lain masih tetap lebih mudah dilakukan. Misalnya Newton-Raphson dan Secant sangat efisien untuk menemukan akar tunggal, metode faktorisasi lebih baik jika faktor-faktor polinomial dapat ditemukan dengan mudah. Dari semua metode yang telah disebutkan, metode iterasi paling tidak efisien tetapi paling mudah untuk diterapkan.
+
 \end{enumerate}
 
 \end{document}
