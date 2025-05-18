@@ -225,9 +225,94 @@
     \item Carilah nilai $\sin(\num{0,28})$ menggunakan Interpolasi Gauss Forward, Gauss Backward, dan Hermite, jika diketahui data-data berikut: \\
     \begin{tabular}{ c c c c c c }
         x & \num{0,15} & \num{0,20} & \num{0,25} & \num{0,30} & \num{0,35} \\
-        y & \num{0,1494} & \num{0,1986} & \num{0,2474} & \num{0,2955} & \num{0,3429} \\
+        $\sin(x)$ & \num{0,1494} & \num{0,1986} & \num{0,2474} & \num{0,2955} & \num{0,3429} \\
     \end{tabular} \\
-    \penyelesaian
+    \penyelesaian 
+    \begin{enumerate}
+        \item Interpolasi Gauss Forward \\
+        Dengan rumus interpolasi gauss forward: 
+        \[
+        f(x_s) \approx f_0 + s\Delta f_0 + \frac{s(s-1)}{2!}\Delta ^2f_0 + \frac{s(s-1)(s-2)}{3!}\Delta ^3f_0 + ...
+        \]
+        Dengan $x_0 = \num{0,25}$ \& langkah x: h = $\num{0,05}$ 
+        \begin{enumerate}
+            \item Hitung s: \\
+            \[
+            s = \frac{x-x_0}{h} = \frac{0.28 - 0.25}{0.05} = 0.6
+            \]
+
+            \item Forward Difference Table: \\
+            \[
+            \begin{array}{c|c|c|c|c|c}
+                x & f(x) & \Delta f & \Delta ^2f_0 & \Delta ^3f_0 & \Delta ^4f_0 \\
+                \hline
+                \num{0,15} & \num{0,1494} & \num{0,0492} & - & - & - \\
+                \num{0,20} & \num{0,1986} & \num{0,0488} &  -\num{0,0004} & - & - \\
+                \num{0,25} & \num{0,2474} & \num{0,0481} &  -\num{0,0007} & -\num{0,0003} & - \\
+                \num{0,30} & \num{0,2955} & \num{0,0474} & -\num{0,0007} &  \num{0,0000} & \num{0,0003} \\
+                \num{0,35} & \num{0,3429} & - & - & - & - \\
+            \end{array}
+            \] \\
+        \end{enumerate}
+        Kita bisa mendapatkan hasil interpolasi gauss forward:
+        \begin{align*}
+            f(0.28) &\approx 0.2474 + (0.6)(0.0481) + \frac{(0.6)(-0.4)}{2}(-0.0007) + \frac{(0.6)(-0.4)(-1.4)}{6}(-0.0003) \\
+            &\approx 0.2474 + 0.02886 + 0.000084 - 0.0000168 \\
+            &\approx 0.2763
+        \end{align*} \\
+
+        \item Interpolasi Gauss Backward \\
+        Dengan rumus interpolasi gauss backward: 
+        \[
+        f(x_s) \approx f_0 + s\Delta f_0 + \frac{s(s-1)}{2!}\Delta ^2f_0 + \frac{s(s-1)(s-2)}{3!}\Delta ^3f_0 + ...
+        \]
+        Dengan $x_0 = \num{0,30}$ \& langkah x: h = $\num{0,05}$ 
+        \begin{enumerate}
+            \item Hitung s: \\
+            \[
+            s = \frac{x-x_0}{h} = \frac{0.28 - 0.30}{0.05} = -0.4
+            \]
+
+            \item Backward Difference Table: \\
+            \[
+            \begin{array}{c|c|c|c|c|c}
+                x & f(x) & \Delta f & \Delta ^2f_0 & \Delta ^3f_0 & \Delta ^4f_0 \\
+                \hline
+                \num{0,15} & \num{0,1494} & - & - & - & - \\
+                \num{0,20} & \num{0,1986} & - & - & - & - \\
+                \num{0,25} & \num{0,2474} & - & - & - & - \\
+                \num{0,30} & \num{0,2955} & \num{0,0481} & -\num{0,0007} &  -\num{0,0003} & \num{0,0003} \\
+                \num{0,35} & \num{0,3429} & \num{0,0474} & -\num{0,0007} & \num{0,0000} & - \\
+            \end{array}
+            \] \\
+        \end{enumerate}
+        Kita bisa mendapatkan hasil interpolasi gauss backward:
+        \begin{align*}
+            f(0.28) &\approx 0.2955 + -(0.4)(0.0474) + \frac{(-0.4)(0.6)}{2}(-0.0007) + \frac{(-0.4)(0.6)(1.6)}{6}(-0.0003) \\
+            &\approx 0.2955 - 0.01896 + 0.000084 - 0.0000192 \\
+            &\approx 0.2766
+        \end{align*}
+
+        \item Interpolasi Hermite \\
+        Dengan menggunakan rumus interpolasi hermite \\
+        Berdasarkan data: \\
+        titik n + 1 = 5 $\rightarrow$ n = 4 \\ \\
+        iterasi untuk setiap i = 0 s.d. 4: \\
+        \begin{align*}
+            L_0(0.28) &= \frac{\sin(0.28 - 0.20)}{\sin(0.15 - 0.20)} * \frac{\sin(0.28 - 0.25)}{\sin(0.15 - 0.25)} * \frac{\sin(0.28 - 0.30)}{\sin(0.15 - 0.30)} * \frac{\sin(0.28 - 0.35)}{\sin(0.15 - 0.35)} \\
+            L_0 &= \frac{\sin(0.08)}{\sin(-0.05)} * \frac{\sin(0.03)}{\sin(-0.10)} * \frac{\sin(-0.02)}{\sin(-0.15)} * \frac{\sin(-0.07)}{\sin(-0.20)}
+        \end{align*}
+        dan diulang untuk i = 1, 2, 3, 4 \\
+        Gabungkan semua: \\
+        \[
+        f(0.28) = L_0 * f(x_0) + L_1 * f(x_1) + \dots + L_4 * f(x_4)
+        \]
+        Didapatkan hasil akhir: \\
+        \[
+        \sin(\num{0,28}) \approx \num{0,2764}
+        \]
+
+    \end{enumerate}
 
     \item Tentukan tekanan uap pada temperatur $372^{\circ}$, jika diketahui hubungan antara tekanan uap dan temperatur sebuah bejana adalah sebagai berikut: \\
         \begin{tabular}{ c c c c c c }
