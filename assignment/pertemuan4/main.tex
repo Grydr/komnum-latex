@@ -234,12 +234,103 @@
         T & $361^{\circ}$ & $367^{\circ}$ & $378^{\circ}$ & $387^{\circ}$ & $399^{\circ}$ \\
         P & \num{154,9} & \num{167,0} & \num{191,0} & \num{212,5} & \num{244,2} \\
     \end{tabular} \\
-    \penyelesaian
+    \penyelesaian \\
+    \section*{Interpolasi Lagrange}
+
+    \subsection*{Data}
+    \[
+    \begin{array}{c|ccccc}
+    T & 361 & 367 & 378 & 387 & 399 \\
+    \hline
+    P & 154.9 & 167.0 & 191.0 & 212.5 & 244.2 \\
+    \end{array}
+    \]
+
+    \subsection*{Perhitungan \( P(372) \)}
+
+
+    \begin{align*}
+    P(372) = \;& 154.9 \cdot \frac{(372-367)(372-378)(372-387)(372-399)}{(361-367)(361-378)(361-387)(361-399)} \\
+    & + 167.0 \cdot \frac{(372-361)(372-378)(372-387)(372-399)}{(367-361)(367-378)(367-387)(367-399)} \\
+    & + 191.0 \cdot \frac{(372-361)(372-367)(372-387)(372-399)}{(378-361)(378-367)(378-387)(378-399)} \\
+    & + 212.5 \cdot \frac{(372-361)(372-367)(372-378)(372-399)}{(387-361)(387-367)(387-378)(387-399)} \\
+    & + 244.2 \cdot \frac{(372-361)(372-367)(372-378)(372-387)}{(399-361)(399-367)(399-378)(399-387)}
+    \end{align*}
+
+    \subsection*{Hasil}
+    \[
+    P(372) \approx 154.9 \times (-0.0436) + 167.0 \times 0.6316 + 191.0 \times 0.6689 + 212.5 \times (-0.1325) + 244.2 \times 0.0020
+    \]
+    \[
+    P(372) \approx -6.75 + 105.48 + 127.76 - 28.16 + 0.49 = \boxed{198.82}
+    \]
 
     \item Fungsi interpolasi polynomial yang telah anda pelajari akan sulit digunakan apabila fungsi yang hendak diinterpolasikan memiliki banyak fluktuasi, sehingga akan memerlukan banyak titik data.
     Metode alternatif yang dapat digunakan adalah menerapkan fungsi interpolasi polynomial untuk bagian per bagian kurva. 
     Metode ini dikenal dengan sebutan Interpolasi Spline. Buatlah sebuah paparan untuk menjelaskan tentang Interpolasi Spline, yang meliputi: konsep dasar, Spline Linier, Spline Kuadratik, dan Spline Kubik. \\
-    \penyelesaian
+    \penyelesaian \\
+    Secara umum, interpolasi spline dilakukan dengan menginterpolasi tiap dua titik data menggunakan polinomial orde rendah. 
+    Hasil tiap interpolasi ini akan menghasilkan susunan polinomial yang lebih halus dan stabil dibandingkan hasil interpolasi dengan polinomial orde tinggi.
+    Setiap interpolasi akan menghasilkan suatu fungsi yang disebut spline, yang dapat berupa garis lurus maupun kurva. 
+    Semakin tinggi orde polinomial dari setiap spline, semakin halus hasil interpolasinya. 
+
+    \begin{itemize}
+        \item Spline linier \\
+        Setiap titik terhubung oleh spline yang berupa garis lurus. Spline linier dari sebuah himpunan data dapat didefinisikan sebagai himpunan fungsi linier:
+        \begin{align*}
+            f(x) &= f(x_0) + m_0(x - x_0) \quad && x_0 \leq x \leq x_1 \\
+            f(x) &= f(x_1) + m_0(x - x_1) \quad && x_1 \leq x \leq x_2 \\
+            &\vdots && \\
+            f(x) &= f(x_{n-1}) + m_0(x - x_{n-1}) \quad && x_{n-1} \leq x \leq x_n
+        \end{align*}
+        dengan $m_i = \frac{f(x_{i+1}) - f(x_i)}{x_{i+1} - x_i}$ adalah kemiringan masing-masing garis lurus.
+
+        \item Spline kuadratik \\
+        Setiap titik terhubung oleh spline yang berupa polinomial berorde-kedua,
+        \begin{equation*}
+            f_i(x) = a_ix^2 + b_ix + c_i
+        \end{equation*}
+        untuk $i = 0$ hingga $n$. Untuk $n+1$ titik data, terdapat $n$ interval, maka terdapat $3n$ konstanta yang harus ditentukan nilainya.
+        Dengan demikian, dibutuhkan $3n$ persamaan untuk menentukan nilai-nilai konstantanya, antara lain:
+        \begin{enumerate}
+            \item Fungsi harus bernilai sama di titik-titik dalam, 
+            \begin{flalign*}
+                & a_{i-1}x_{i-1}^2 + b_{i-1}x_{i-1} + c_{i-1} = f(x_{i-1}) && \\
+                & a_ix_{i-1}^2 + b_ix_{i-1} + c_i = f(x_{i-1}) &&
+            \end{flalign*}
+            untuk $i = 2$ hingga $n$. Total $2(n - 1) = 2n - 2$ persamaan.
+            \item Fungsi pertama dan terakhir harus melalui titik pertama dan terakhir,
+            \begin{flalign*}
+                & a_1x_0^2 + b_1x_0 + c_1 = f(x_0) && \\
+                & a_nx_n^2 + b_nx_n + c_n = f(x_n) &&
+            \end{flalign*}
+            total $2n - 2 + 2 = 2n$ persamaan.
+            \item Turunan pertama harus kontinu di titik-titik dalam,
+            \begin{flalign*}
+                & f'(x) = 2ax + b && \\
+                & 2a_{i-1}x_{i-1} + b_{i-1} = 2a_ix_{i-1} + b_i &&
+            \end{flalign*}
+            untuk $i = 2$ hingga $n$. Total $2n + n - 1 = 3n - 1$ persamaan.
+            \item Asumsikan turunan kedua nol di titik awal, sehingga $a_1 = 0$. Total $3n - 1 + 1 = 3n$ persamaan.
+        \end{enumerate}
+        Setelah semua nilai konstanta diperoleh, substitusikan, sehingga diperoleh $n$ spline kuadratik.
+
+        \item Spline kubik \\
+        Setiap titik terhubung oleh spline yang berupa polinomial berorde-ketiga,
+        \begin{equation*}
+            f_i(x) = a_ix^3 + b_ix^2 + c_ix + d_i
+        \end{equation*}
+        untuk $i = 0$ hingga $n$. Untuk $n+1$ titik data, terdapat $n$ interval, maka terdapat $4n$ konstanta yang harus ditentukan nilainya.
+        Dengan demikian, dibutuhkan $4n$ perrsamaan untuk menentukan semua nilai konstantanya, antara lain:
+        \begin{enumerate}
+            \item Fungsi harus bernilai sama di titik-titik dalam, $2n - 2$ persamaan.
+            \item Fungsi pertama dan terakhir harus melalui titik pertama dan terakhir, 2 persamaan.
+            \item Turunan pertama harus kontinu di titik-titik dalam, $n - 1$ persamaan.
+            \item Turunan kedua harus kontinu di titik-titik dalam, $n - 1$ persamaan.
+            \item Asumsikan turunan kedua nol di titik paling ujung, 2 persamaan. 
+        \end{enumerate}
+
+    \end{itemize}
 
 \end{enumerate}
 
