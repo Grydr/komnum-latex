@@ -73,7 +73,58 @@
         $x$ & $\num{1,0}$ & $\num{2,0}$ & $\num{3,0}$ & $\num{4,0}$ & $\num{5,0}$ & $\num{6,0}$ & $\num{7,0}$\\
         $f(x)$ & \num{1,8419} & \num{5,6838} & \num{11,5257} & \num{19,3676} & \num{29,2095} & \num{41,0514} & \num{54,8933} \\
     \end{tabular} \\
-    \penyelesaian 
+    \penyelesaian
+    \begin{itemize}
+        \item Data pertama: \\
+        \begin{itemize}
+            \item Metode Trapezoida \\
+            Dengan $\Delta x = 1,$
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{\Delta x}{2} \left [f(1) + f(7) + 2 \left [f(2) + f(3) + f(4) + f(5) + f(6)\right ] \right ] \\
+                &\approx \frac{1}{2} \left [\num{1,8287} + \num{54,8011} + 2 \left [\num{5,6575} + \num{11,4862} + \num{19,3149} + \num{29,1437} + \num{40,9724}\right ] \right ] \\
+                &\approx \frac{1}{2} \left [\num{1,8287} + \num{54,8011} + 2 \left [\num{106,5747}\right ] \right ] \\
+                &\approx \frac{1}{2} (\num{269,7792}) \\
+                &\approx \num{134,8896}
+            \end{align*}
+            \item Metode Simpson 1/3 \\
+            Dengan $\Delta x = 1,$
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{\Delta x}{3} [f(1) + 4[f(2) + f(4) + f(6)] + 2[f(3) + f(5)] + f(7)] \\
+                &\approx \frac{1}{3} [\num{1,8287} + 4[\num{5,6575} + \num{19,3149} + \num{40,9724}] + 2[\num{11,4862} + \num{29,1437}] + \num{54,8011}] \\
+                &\approx \frac{1}{3} [\num{1,8287} + 4[\num{65,9448}] + 2[\num{40,6299}] + \num{54,8011}] \\ 
+                &\approx \frac{1}{3} (\num{401,6688}) \\
+                &\approx \num{133,8896}
+            \end{align*}
+            \item Metode Simpson 3/8 \\
+            Dengan $\Delta x = 1,$
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{3\Delta x}{8} [f(1) + 3[f(2) + f(3) + f(5) + f(6)] + 3[f(4)] + f(7)] \\
+                &\approx \frac{3}{8} [\num{1,8287} + 3(\num{5,6575} + \num{11,4862} + \num{29,1437} + \num{40,9724}) + 2(\num{19,3149}) + \num{54,8011}] \\
+                &\approx \frac{3}{8} [\num{1,8287} + 3(\num{87,2598}) + \num{38,6298} + \num{54,8011}] \\
+                &\approx \frac{3}{8} [\num{1,8287} + \num{261,7794} + \num{38,6298} + \num{54,8011}] \\
+                &\approx \frac{3}{8} (\num{357,0390}) \\
+                &\approx \num{133,8896}
+            \end{align*}
+
+        \end{itemize}
+        \item Data kedua: \\
+        \begin{itemize}
+            \item Metode Trapezoida \\
+            \item Metode Simpson 1/3 \\
+            \item Metode Simpson 3/8 \\
+        \end{itemize}
+        \item Data ketiga: \\
+        \begin{itemize}
+            \item Metode Trapezoida \\
+            \item Metode Simpson 1/3 \\
+            \item Metode Simpson 3/8 \\
+        \end{itemize}
+
+    \end{itemize}
+
 
 \end{enumerate}
 
