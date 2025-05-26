@@ -1,0 +1,422 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{esdiff}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\pgfplotsset{compat=1.18, width=10cm}
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\sisetup{
+    input-ignore={.},
+    output-decimal-marker={,},
+    group-minimum-digits=4,
+    group-separator={.},
+    group-digits=integer
+}
+
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+
+\lstdefinestyle{code}{
+    aboveskip={1.3\baselineskip},
+    basicstyle=\normalsize\ttfamily\linespread{4},
+    breaklines=false,
+    columns=fullflexible,
+    commentstyle=\color[rgb]{0.127,0.427,0.514}\ttfamily\itshape,
+    escapechar=@,
+    extendedchars=true,
+    frame=single,
+    identifierstyle=\color{black},
+    inputencoding=latin1,
+    keywordstyle=\color[HTML]{228B22}\bfseries,
+    ndkeywordstyle=\color[HTML]{228B22}\bfseries,
+    numbers=left,
+    numberstyle=\normalsize,
+    prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    stringstyle=\color[rgb]{0.639,0.082,0.082}\ttfamily,
+    upquote=true,
+    showstringspaces=false,
+    xleftmargin=5ex,
+    aboveskip=5pt
+}
+
+\newcommand{\penyelesaian}{\textbf{Penyelesaian: }}
+
+\title{\textbf{Komputasi Numerik: Tugas 4}}
+\author{Kelompok 15}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Carilah nilai $y(\num{2,1})$ menggunakan Interpolasi Linier, Kuadratik, NGF, dan Lagrange, jika diketahui data-data berikut: \\
+    \begin{tabular}{ c c c c c c }
+        x & 2 & 4 & 6 & 8 & 10 \\
+        y & \num{9,68} & \num{10,96} & \num{12,32} & \num{13,76} & \num{15,28} \\
+    \end{tabular} \\
+    \penyelesaian
+    \begin{enumerate}
+        \item Interpolasi Linier: \\
+        Dengan rumus interpolasi linier:
+        \begin{equation*}
+            f_1(x) = f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x - x_0)
+        \end{equation*}
+        dan nilai $x_0 = 2$ dan $x_1 = 4$, diperoleh interpolasi linier dari $y(\num{2,1})$
+        \begin{align*}
+            y(\num{2,1}) &= f_1(\num{2,1}) = f(2) + \frac{f(4) - f(2)}{4 - 2}(\num{2,1} - 2) \\
+            &= \num{9,68} + \frac{\num{10,96} - \num{9,68}}{2}(\num{0,1}) \\
+            &= \num{9,744}
+        \end{align*}
+        
+        \item Interpolasi Kuadratik: \\
+        Dengan rumus interpolasi kuadratik:
+        \begin{equation*}
+            f_2(x) = b_0 + b_1(x - x_0) + b_2(x - x_0)(x - x_1)
+        \end{equation*}
+        $x_0 = 2$, $x_1 = 4$, dan $x_2 = 6$, sehingga:
+        \begin{align*}
+            b_0 &= f(x_0) = \num{9,68} \\
+            b_1 &= \frac{f(x_1) - f(x_0)}{x_1 - x_0} = \frac{\num{10,96} - \num{9,68}}{4 - 2} = \num{0,64} \\
+            b_2 &= \frac{\frac{f(x_2) - f(x_1)}{x_2 - x_1} - \frac{f(x_1) - f(x_0)}{x_1 - x_0}}{x_2 - x_0} = \frac{\frac{\num{12,32} - \num{10,96}}{6 - 4} - \num{0,64}}{6 - 2} = \num{0,01}
+        \end{align*}
+
+        Dengan mensubstitusikan nilai-nilai di atas pada rumus interpolasi kuadratik, diperoleh rumus kuadratik:
+        \begin{equation*}
+            f_2(x) = \num{9,68} + \num{0,64}(x - 2) + \num{0,01}(x - 2)(x - 4)
+        \end{equation*}
+        sehingga diperoleh nilai $y(\num{2,1})$
+        \begin{align*}
+            y(\num{2,1}) &= f_2(\num{2,1}) \\
+            &= \num{9,68} + \num{0,64}(\num{2,1} - 2) + \num{0,01}(\num{2,1} - 2)(\num{2,1} - 4) \\
+            &= \num{9,68} + \num{0,64}(\num{0,1}) + \num{0,01}(\num{0,1})(-\num{1,9}) \\
+            &= \num{9,7421}
+        \end{align*}
+
+        \item Interpolasi NGF: \\
+        Bentuk umum rumus interpolasi NGF:
+        \begin{equation*}
+            f_n(x) = \sum_{k=0}^{n} \binom{s}{k} \Delta^k f(x_0)
+        \end{equation*}
+        dengan
+        \begin{align*}
+            s = \frac{x - x_0}{h}, \quad
+            \binom{s}{k} = \frac{s(s - 1)(s - 2)(s - k + 1)}{k!}, \quad \text{dan} \quad \Delta f(x) = f(x+h) - f(x)
+        \end{align*}
+
+        Informasi terkait beda-hingga maju dapat diperoleh dari tabel beda-hingga maju berikut: \\
+        \begin{tabular}{c c c c c c}
+        $x$ & $f(x)$ & $\Delta f(x)$ & $\Delta^2 f(x)$ & $\Delta^3 f(x)$ & $\Delta^4 f(x)$ \\
+        \hline
+        2  & \num{9,68}  &            &             &           &      \\
+           &             & \num{1,28} &             &           &      \\
+        4  & \num{10,96} &            & \num{0,08}  &           &      \\
+           &             & \num{1,36} &             & 0 &      \\
+        6  & \num{12,32} &            & \num{0,08}  &           & 0 \\
+           &             & \num{1,44} &             & 0 &      \\
+        8  & \num{13,76} &            & \num{0,08}  &           &      \\
+           &             & \num{1,52} &             &           &      \\
+        10 & \num{15,28} &            &             &           &      \\
+        \end{tabular} \\
+
+        Dengan $s = \frac{(\num{2,1} - 2)}{(4 - 2)} = \num{0,05}$, diperoleh hasil interpolasi NGF dari $y(\num{2,1})$
+        \begin{align*}
+            y(\num{2,1}) &= f_4(\num{2,1}) \\
+            &= f(2) + s\Delta f(2) + \frac{s(s-1)}{2}\Delta^2 f(2) + \frac{s(s-1)(s-2)}{6}\Delta^3 f(2) + \frac{s(s-1)(s-2)(s-3)}{24}\Delta^4 f(2) \\
+            &= \num{9,68} + (\num{0,05})(\num{1,28}) + \frac{(\num{0,05})(\num{0,05} - 1)}{2}(\num{0,08}) + 0 + 0 \\
+            &= \num{9,7421}
+        \end{align*}
+
+        \item Interpolasi Lagrange: \\
+        Bentuk umum dari rumus interpolasi Lagrange:
+        \begin{equation*}
+            f_n(x) = \sum_{i = 0}^n L_i(x)f(x_i)
+        \end{equation*}
+        dengan
+        \begin{equation*}
+            L_i(x) = \prod_{\substack{j=0 \\ j \ne i}}^{n} \frac{x - x_j}{x_i - x_j}
+        \end{equation*}
+
+        Berdasarkan data-data yang telah diberikan, maka interpolasi Lagrange dari $y(\num{2,1})$
+        \begin{align*}
+        f_4(\num{2,1}) =\ 
+        &\frac{(\num{2,1} - \num{4})(\num{2,1} - \num{6})(\num{2,1} - \num{8})(\num{2,1} - \num{10})}
+            {(\num{2} - \num{4})(\num{2} - \num{6})(\num{2} - \num{8})(\num{2} - \num{10})}(\num{9,68}) \\
+        +\, &\frac{(\num{2,1} - \num{2})(\num{2,1} - \num{6})(\num{2,1} - \num{8})(\num{2,1} - \num{10})}
+            {(\num{4} - \num{2})(\num{4} - \num{6})(\num{4} - \num{8})(\num{4} - \num{10})}(\num{10,96}) \\
+        +\, &\frac{(\num{2,1} - \num{2})(\num{2,1} - \num{4})(\num{2,1} - \num{8})(\num{2,1} - \num{10})}
+            {(\num{6} - \num{2})(\num{6} - \num{4})(\num{6} - \num{8})(\num{6} - \num{10})}(\num{12,32}) \\
+        +\, &\frac{(\num{2,1} - \num{2})(\num{2,1} - \num{4})(\num{2,1} - \num{6})(\num{2,1} - \num{10})}
+            {(\num{8} - \num{2})(\num{8} - \num{4})(\num{8} - \num{6})(\num{8} - \num{10})}(\num{13,76}) \\
+        +\, &\frac{(\num{2,1} - \num{2})(\num{2,1} - \num{4})(\num{2,1} - \num{6})(\num{2,1} - \num{8})}
+            {(\num{10} - \num{2})(\num{10} - \num{4})(\num{10} - \num{6})(\num{10} - \num{8})}(\num{15,28}) \\
+        =\, &\num{9,7421}
+        \end{align*}
+    \end{enumerate}
+
+    \item Carilah nilai $e^{\num{2,00}}$ menggunakan Interpolasi NGB, jika diketahui data-data berikut: \\
+    \begin{tabular}{ c c c c c c }
+        x & \num{0,1} & \num{0,6} & \num{1,1} & \num{1,6} & \num{2,1} \\
+        y & \num{1,1052} & \num{1,8221} & \num{3,0042} & \num{4,9530} & \num{8,1662} \\
+    \end{tabular} \\
+    \penyelesaian \\
+    \subsection*{Tabel Beda}
+    \[
+    \begin{array}{|c|c|c|c|c|c|}
+    \hline
+    x & y & \nabla y & \nabla^2 y & \nabla^3 y & \nabla^4 y \\
+    \hline
+    0.1 & 1.1052 & & & & \\
+    0.6 & 1.8221 & 0.7169 & & & \\
+    1.1 & 3.0042 & 1.1821 & 0.4652 & & \\
+    1.6 & 4.9530 & 1.9488 & 0.7667 & 0.3015 & \\
+    2.1 & 8.1662 & 3.2132 & 1.2644 & 0.4977 & 0.1962 \\
+    \hline
+    \end{array}
+    \]
+
+    \begin{itemize}
+    \item Titik \( x_s = 2.00 \)
+    \item Titik akhir \( x_n = 2.1 \)
+    \item Interval  \(h = 0.6 - 0.1 = 0.5 \)
+    \item Parameter \( s \):
+    \[
+    s = \frac{x_s - x_n}{h} = \frac{2.00 - 2.1}{0.5} = -0.2
+    \]
+    \end{itemize}
+
+    \subsection*{Interpolasi}
+    Rumus NGB:
+    \[
+    f(x) \approx y_n + s \nabla y_n + \frac{s(s+1)}{2!} \nabla^2 y_n + \frac{s(s+1)(s+2)}{3!} \nabla^3 y_n + \frac{s(s+1)(s+2)(s+3)}{4!} \nabla^4 y_n
+    \]
+
+    Substitusi nilai:
+    \[
+    \begin{aligned}
+    f(2.00) &\approx 8.1662 + (-0.2)(3.2132) + \frac{(-0.2)(0.8)}{2}(1.2644) \\
+    &\quad + \frac{(-0.2)(0.8)(1.8)}{6}(0.4977) + \frac{(-0.2)(0.8)(1.8)(2.8)}{24}(0.1962) \\
+    &= 8.1662 - 0.64264 + \frac{-0.16}{2}(1.2644) + \frac{-0.288}{6}(0.4977) + \frac{-0.8064}{24}(0.1962) \\
+    &= 8.1662 - 0.64264 - 0.101152 - 0.0238896 - 0.00659472 \\
+    &= 7.39192
+    \end{aligned}
+    \]
+
+    \subsection*{Hasil}
+    Nilai interpolasi \( e^{2.00} \approx 7.39192 \)
+
+    Nilai eksak \( e^{2.00} \approx 7.389056 \)
+
+    Error relatif:
+    \[
+    \text{\(E_r\)} = \left| \frac{7.39192 - 7.389056}{7.389056} \right| \times 100\% \approx 0.0388\%
+    \]
+
+    \item Carilah nilai $\sin(\num{0,28})$ menggunakan Interpolasi Gauss Forward, Gauss Backward, dan Hermite, jika diketahui data-data berikut: \\
+    \begin{tabular}{ c c c c c c }
+        x & \num{0,15} & \num{0,20} & \num{0,25} & \num{0,30} & \num{0,35} \\
+        $\sin(x)$ & \num{0,1494} & \num{0,1986} & \num{0,2474} & \num{0,2955} & \num{0,3429} \\
+    \end{tabular} \\
+    \penyelesaian 
+    \begin{enumerate}
+        \item Interpolasi Gauss Forward \\
+        Dengan rumus interpolasi gauss forward: 
+        \[
+        f(x_s) \approx f_0 + s\Delta f_0 + \frac{s(s-1)}{2!}\Delta ^2f_0 + \frac{s(s-1)(s-2)}{3!}\Delta ^3f_0 + ...
+        \]
+        Dengan $x_0 = \num{0,25}$ \& langkah x: h = $\num{0,05}$ 
+        \begin{enumerate}
+            \item Hitung s: \\
+            \[
+            s = \frac{x-x_0}{h} = \frac{0.28 - 0.25}{0.05} = 0.6
+            \]
+
+            \item Forward Difference Table: \\
+            \[
+            \begin{array}{c|c|c|c|c|c}
+                x & f(x) & \Delta f & \Delta ^2f_0 & \Delta ^3f_0 & \Delta ^4f_0 \\
+                \hline
+                \num{0,15} & \num{0,1494} & \num{0,0492} & - & - & - \\
+                \num{0,20} & \num{0,1986} & \num{0,0488} &  -\num{0,0004} & - & - \\
+                \num{0,25} & \num{0,2474} & \num{0,0481} &  -\num{0,0007} & -\num{0,0003} & - \\
+                \num{0,30} & \num{0,2955} & \num{0,0474} & -\num{0,0007} &  \num{0,0000} & \num{0,0003} \\
+                \num{0,35} & \num{0,3429} & - & - & - & - \\
+            \end{array}
+            \] \\
+        \end{enumerate}
+        Kita bisa mendapatkan hasil interpolasi gauss forward:
+        \begin{align*}
+            f(0.28) &\approx 0.2474 + (0.6)(0.0481) + \frac{(0.6)(-0.4)}{2}(-0.0007) + \frac{(0.6)(-0.4)(-1.4)}{6}(-0.0003) \\
+            &\approx 0.2474 + 0.02886 + 0.000084 - 0.0000168 \\
+            &\approx 0.2763
+        \end{align*} \\
+
+        \item Interpolasi Gauss Backward \\
+        Dengan rumus interpolasi gauss backward: 
+        \[
+        f(x_s) \approx f_0 + s\Delta f_0 + \frac{s(s-1)}{2!}\Delta ^2f_0 + \frac{s(s-1)(s-2)}{3!}\Delta ^3f_0 + ...
+        \]
+        Dengan $x_0 = \num{0,30}$ \& langkah x: h = $\num{0,05}$ 
+        \begin{enumerate}
+            \item Hitung s: \\
+            \[
+            s = \frac{x-x_0}{h} = \frac{0.28 - 0.30}{0.05} = -0.4
+            \]
+
+            \item Backward Difference Table: \\
+            \[
+            \begin{array}{c|c|c|c|c|c}
+                x & f(x) & \Delta f & \Delta ^2f_0 & \Delta ^3f_0 & \Delta ^4f_0 \\
+                \hline
+                \num{0,15} & \num{0,1494} & - & - & - & - \\
+                \num{0,20} & \num{0,1986} & - & - & - & - \\
+                \num{0,25} & \num{0,2474} & - & - & - & - \\
+                \num{0,30} & \num{0,2955} & \num{0,0481} & -\num{0,0007} &  -\num{0,0003} & \num{0,0003} \\
+                \num{0,35} & \num{0,3429} & \num{0,0474} & -\num{0,0007} & \num{0,0000} & - \\
+            \end{array}
+            \] \\
+        \end{enumerate}
+        Kita bisa mendapatkan hasil interpolasi gauss backward:
+        \begin{align*}
+            f(0.28) &\approx 0.2955 + -(0.4)(0.0474) + \frac{(-0.4)(0.6)}{2}(-0.0007) + \frac{(-0.4)(0.6)(1.6)}{6}(-0.0003) \\
+            &\approx 0.2955 - 0.01896 + 0.000084 - 0.0000192 \\
+            &\approx 0.2766
+        \end{align*}
+
+        \item Interpolasi Hermite \\
+        Dengan menggunakan rumus interpolasi hermite \\
+        Berdasarkan data: \\
+        titik n + 1 = 5 $\rightarrow$ n = 4 \\ \\
+        iterasi untuk setiap i = 0 s.d. 4: \\
+        \begin{align*}
+            L_0(0.28) &= \frac{\sin(0.28 - 0.20)}{\sin(0.15 - 0.20)} * \frac{\sin(0.28 - 0.25)}{\sin(0.15 - 0.25)} * \frac{\sin(0.28 - 0.30)}{\sin(0.15 - 0.30)} * \frac{\sin(0.28 - 0.35)}{\sin(0.15 - 0.35)} \\
+            L_0 &= \frac{\sin(0.08)}{\sin(-0.05)} * \frac{\sin(0.03)}{\sin(-0.10)} * \frac{\sin(-0.02)}{\sin(-0.15)} * \frac{\sin(-0.07)}{\sin(-0.20)}
+        \end{align*}
+        dan diulang untuk i = 1, 2, 3, 4 \\
+        Gabungkan semua: \\
+        \[
+        f(0.28) = L_0 * f(x_0) + L_1 * f(x_1) + \dots + L_4 * f(x_4)
+        \]
+        Didapatkan hasil akhir: \\
+        \[
+        \sin(\num{0,28}) \approx \num{0,2764}
+        \]
+
+    \end{enumerate}
+
+    \item Tentukan tekanan uap pada temperatur $372^{\circ}$, jika diketahui hubungan antara tekanan uap dan temperatur sebuah bejana adalah sebagai berikut: \\
+        \begin{tabular}{ c c c c c c }
+        T & $361^{\circ}$ & $367^{\circ}$ & $378^{\circ}$ & $387^{\circ}$ & $399^{\circ}$ \\
+        P & \num{154,9} & \num{167,0} & \num{191,0} & \num{212,5} & \num{244,2} \\
+    \end{tabular} \\
+    \penyelesaian \\
+    \section*{Interpolasi Lagrange}
+
+    \subsection*{Data}
+    \[
+    \begin{array}{c|ccccc}
+    T & 361 & 367 & 378 & 387 & 399 \\
+    \hline
+    P & 154.9 & 167.0 & 191.0 & 212.5 & 244.2 \\
+    \end{array}
+    \]
+
+    \subsection*{Perhitungan \( P(372) \)}
+
+
+    \begin{align*}
+    P(372) = \;& 154.9 \cdot \frac{(372-367)(372-378)(372-387)(372-399)}{(361-367)(361-378)(361-387)(361-399)} \\
+    & + 167.0 \cdot \frac{(372-361)(372-378)(372-387)(372-399)}{(367-361)(367-378)(367-387)(367-399)} \\
+    & + 191.0 \cdot \frac{(372-361)(372-367)(372-387)(372-399)}{(378-361)(378-367)(378-387)(378-399)} \\
+    & + 212.5 \cdot \frac{(372-361)(372-367)(372-378)(372-399)}{(387-361)(387-367)(387-378)(387-399)} \\
+    & + 244.2 \cdot \frac{(372-361)(372-367)(372-378)(372-387)}{(399-361)(399-367)(399-378)(399-387)}
+    \end{align*}
+
+    \subsection*{Hasil}
+    \[
+    P(372) \approx 154.9 \times (-0.0436) + 167.0 \times 0.6316 + 191.0 \times 0.6689 + 212.5 \times (-0.1325) + 244.2 \times 0.0020
+    \]
+    \[
+    P(372) \approx -6.75 + 105.48 + 127.76 - 28.16 + 0.49 = \boxed{198.82}
+    \]
+
+    \item Fungsi interpolasi polynomial yang telah anda pelajari akan sulit digunakan apabila fungsi yang hendak diinterpolasikan memiliki banyak fluktuasi, sehingga akan memerlukan banyak titik data.
+    Metode alternatif yang dapat digunakan adalah menerapkan fungsi interpolasi polynomial untuk bagian per bagian kurva. 
+    Metode ini dikenal dengan sebutan Interpolasi Spline. Buatlah sebuah paparan untuk menjelaskan tentang Interpolasi Spline, yang meliputi: konsep dasar, Spline Linier, Spline Kuadratik, dan Spline Kubik. \\
+    \penyelesaian \\
+    Secara umum, interpolasi spline dilakukan dengan menginterpolasi tiap dua titik data menggunakan polinomial orde rendah. 
+    Hasil tiap interpolasi ini akan menghasilkan susunan polinomial yang lebih halus dan stabil dibandingkan hasil interpolasi dengan polinomial orde tinggi.
+    Setiap interpolasi akan menghasilkan suatu fungsi yang disebut spline, yang dapat berupa garis lurus maupun kurva. 
+    Semakin tinggi orde polinomial dari setiap spline, semakin halus hasil interpolasinya. 
+
+    \begin{itemize}
+        \item Spline linier \\
+        Setiap titik terhubung oleh spline yang berupa garis lurus. Spline linier dari sebuah himpunan data dapat didefinisikan sebagai himpunan fungsi linier:
+        \begin{align*}
+            f(x) &= f(x_0) + m_0(x - x_0) \quad && x_0 \leq x \leq x_1 \\
+            f(x) &= f(x_1) + m_0(x - x_1) \quad && x_1 \leq x \leq x_2 \\
+            &\vdots && \\
+            f(x) &= f(x_{n-1}) + m_0(x - x_{n-1}) \quad && x_{n-1} \leq x \leq x_n
+        \end{align*}
+        dengan $m_i = \frac{f(x_{i+1}) - f(x_i)}{x_{i+1} - x_i}$ adalah kemiringan masing-masing garis lurus.
+
+        \item Spline kuadratik \\
+        Setiap titik terhubung oleh spline yang berupa polinomial berorde-kedua,
+        \begin{equation*}
+            f_i(x) = a_ix^2 + b_ix + c_i
+        \end{equation*}
+        untuk $i = 0$ hingga $n$. Untuk $n+1$ titik data, terdapat $n$ interval, maka terdapat $3n$ konstanta yang harus ditentukan nilainya.
+        Dengan demikian, dibutuhkan $3n$ persamaan untuk menentukan nilai-nilai konstantanya, antara lain:
+        \begin{enumerate}
+            \item Fungsi harus bernilai sama di titik-titik dalam, 
+            \begin{flalign*}
+                & a_{i-1}x_{i-1}^2 + b_{i-1}x_{i-1} + c_{i-1} = f(x_{i-1}) && \\
+                & a_ix_{i-1}^2 + b_ix_{i-1} + c_i = f(x_{i-1}) &&
+            \end{flalign*}
+            untuk $i = 2$ hingga $n$. Total $2(n - 1) = 2n - 2$ persamaan.
+            \item Fungsi pertama dan terakhir harus melalui titik pertama dan terakhir,
+            \begin{flalign*}
+                & a_1x_0^2 + b_1x_0 + c_1 = f(x_0) && \\
+                & a_nx_n^2 + b_nx_n + c_n = f(x_n) &&
+            \end{flalign*}
+            total $2n - 2 + 2 = 2n$ persamaan.
+            \item Turunan pertama harus kontinu di titik-titik dalam,
+            \begin{flalign*}
+                & f'(x) = 2ax + b && \\
+                & 2a_{i-1}x_{i-1} + b_{i-1} = 2a_ix_{i-1} + b_i &&
+            \end{flalign*}
+            untuk $i = 2$ hingga $n$. Total $2n + n - 1 = 3n - 1$ persamaan.
+            \item Asumsikan turunan kedua nol di titik awal, sehingga $a_1 = 0$. Total $3n - 1 + 1 = 3n$ persamaan.
+        \end{enumerate}
+        Setelah semua nilai konstanta diperoleh, substitusikan, sehingga diperoleh $n$ spline kuadratik.
+
+        \item Spline kubik \\
+        Setiap titik terhubung oleh spline yang berupa polinomial berorde-ketiga,
+        \begin{equation*}
+            f_i(x) = a_ix^3 + b_ix^2 + c_ix + d_i
+        \end{equation*}
+        untuk $i = 0$ hingga $n$. Untuk $n+1$ titik data, terdapat $n$ interval, maka terdapat $4n$ konstanta yang harus ditentukan nilainya.
+        Dengan demikian, dibutuhkan $4n$ perrsamaan untuk menentukan semua nilai konstantanya, antara lain:
+        \begin{enumerate}
+            \item Fungsi harus bernilai sama di titik-titik dalam, $2n - 2$ persamaan.
+            \item Fungsi pertama dan terakhir harus melalui titik pertama dan terakhir, 2 persamaan.
+            \item Turunan pertama harus kontinu di titik-titik dalam, $n - 1$ persamaan.
+            \item Turunan kedua harus kontinu di titik-titik dalam, $n - 1$ persamaan.
+            \item Asumsikan turunan kedua nol di titik paling ujung, 2 persamaan. 
+        \end{enumerate}
+
+    \end{itemize}
+
+\end{enumerate}
+
+\end{document}
