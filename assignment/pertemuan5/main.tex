@@ -110,17 +110,126 @@
             \end{align*}
 
         \end{itemize}
+
         \item Data kedua: \\
-        \begin{itemize}
-            \item Metode Trapezoida \\
-            \item Metode Simpson 1/3 \\
-            \item Metode Simpson 3/8 \\
-        \end{itemize}
+        \subsection*{Data}
+        \begin{center}
+        \begin{tabular}{|c|ccccccc|}
+        \hline
+        $x$    & 1,0     & 2,0     & 3,0     & 4,0     & 5,0     & 6,0     & 7,0     \\ \hline
+        $f(x)$ & 2,1353  & 6,2707  & 12,4060 & 20,5413 & 30,6767 & 42,8120 & 56,9473 \\ \hline
+        \end{tabular}
+        \end{center}
+
+        \textbf{Asumsi:} \( I_{\text{eksak}} = 140 \) .
+
+        \subsection*{1. Metode Trapezoida}
+        \subsubsection*{a. Trapezoida (6 pias, $h=1$)}
+        \[
+        I = \frac{h}{2} \left[ f(1) + 2\sum_{i=2}^{6} f(x_i) + f(7) \right] = \boxed{142,2480}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{142,2480 - 140}{140} \right| \times 100\% = \boxed{1,61\%}
+        \]
+
+        \subsubsection*{b. Trapezoida Koreksi Ujung}
+        \[
+        f'(1) \approx \frac{-f(3) + 4f(2) - 3f(1)}{2h} = 2,1353, \quad f'(7) \approx \frac{3f(7) - 4f(6) + f(5)}{2h} = 14,8120
+        \]
+        \[
+        \text{Koreksi} = -\frac{h^2}{12} \left[ f'(7) - f'(1) \right] = -1,0564
+        \]
+        \[
+        I_{\text{final}} = 142,2480 - 1,0564 = \boxed{141,1916}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{141,1916 - 140}{140} \right| \times 100\% = \boxed{0,85\%}
+        \]
+
+        \subsection*{2. Metode Simpson 1/3}
+        \subsubsection*{a. 2 Pias ($n=2$, $\Delta x=3$)}
+        \[
+        I = \frac{3}{3} \left[ f(1) + 4f(4) + f(7) \right] = \boxed{140,6478}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{140,6478 - 140}{140} \right| \times 100\% = \boxed{0,46\%}
+        \]
+
+        \subsubsection*{b. 6 Pias ($n=6$, $\Delta x=1$)}
+        \[
+        I = \frac{1}{3} \left[ f(1) + 4(f(2)+f(4)+f(6)) + 2(f(3)+f(5)) + f(7) \right] = \boxed{141,2480}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{141,2480 - 140}{140} \right| \times 100\% = \boxed{0,89\%}
+        \]
+
+        \subsection*{3. Metode Simpson 3/8}
+        \subsubsection*{a. 3 Pias ($n=3$, $\Delta x=2$)}
+        \[
+        I = \frac{6}{8} \left[ f(1) + 3f(3) + 3f(5) + f(7) \right] = \boxed{119,0333}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{119,0333 - 140}{140} \right| \times 100\% = \boxed{14,98\%}
+        \]
+
+        \subsubsection*{b. 6 Pias ($n=6$, $\Delta x=1$)}
+        \[
+        I = \frac{3}{8} \left[ f(1) + 3(f(2)+f(3)+f(5)+f(6)) + 2f(4) + f(7) \right] = \boxed{158,2555}
+        \]
+        \[
+        \text{Error Relatif} = \left| \frac{158,2555 - 140}{140} \right| \times 100\% = \boxed{13,04\%}
+        \]
+
+        \subsection*{Hasil dan Error Relatif}
+        \begin{center}
+        \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metode} & \textbf{Hasil Integral} & \textbf{Error Relatif} \\ \hline
+        Trapezoida Standar (6 pias) & 142,2480 & 1,61\% \\ \hline
+        Trapezoida + Koreksi Ujung & 141,1916 & 0,85\% \\ \hline
+        Simpson 1/3 (2 pias) & 140,6478 & 0,46\% \\ \hline
+        Simpson 1/3 (6 pias) & 141,2480 & 0,89\% \\ \hline
+        Simpson 3/8 (3 pias) & 119,0333 & 14,98\% \\ \hline
+        Simpson 3/8 (6 pias) & 158,2555 & 13,04\% \\ \hline
+        \end{tabular}
+        \end{center}
+
+    
         \item Data ketiga: \\
         \begin{itemize}
             \item Metode Trapezoida \\
+            Dengan $\Delta x = 1,$
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{\Delta x}{2} \left [f(1) + f(7) + 2 \left [f(2) + f(3) + f(4) + f(5) + f(6)\right ] \right ] \\
+                &\approx \frac{1}{2} \left [\num{1,8419} + \num{54,8933} + 2 \left [\num{5,6838} + \num{11,5257} + \num{19,3676} + \num{29,2095} + \num{41,0514}\right ] \right ] \\
+                &\approx \frac{1}{2} \left [\num{1,8419} + \num{54,8933} + 2 \left [\num{106,8379}\right ] \right ] \\
+                &\approx \frac{1}{2} (\num{269,4109}) \\
+                &\approx \num{134,7054}
+            \end{align*}
+
             \item Metode Simpson 1/3 \\
+            Dengan $\Delta x = 1,$ (jumlah segmen genap: 6)
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{\Delta x}{3} [f(1) + 4[f(2) + f(4) + f(6)] + 2[f(3) + f(5)] + f(7)] \\
+                &\approx \frac{1}{3} [\num{1,8419} + 4[\num{5,6838} + \num{19,3676} + \num{41,0514}] + 2[\num{11,5257} + \num{29,2095}] + \num{54,8933}] \\
+                &\approx \frac{1}{3} [\num{1,8419} + 4[\num{66,1028}] + 2[\num{40,7352}] + \num{54,8933}] \\ 
+                &\approx \frac{1}{3} (\num{401,6396}) \\
+                &\approx \num{133,8799}
+            \end{align*}
+
             \item Metode Simpson 3/8 \\
+            Dengan $\Delta x = 1,$ (jumlah segmen kelipatan 3: 6)
+            \begin{align*}
+                I &= \int_{1}^{7} f(x) dx \\
+                &\approx \frac{3\Delta x}{8} [f(1) + 3[f(2) + f(3) + f(5) + f(6)] + 2[f(4)] + f(7)] \\
+                &\approx \frac{3}{8} [\num{1,8419} + 3(\num{5,6838} + \num{11,5257} + \num{29,2095} + \num{41,0514}) + 2(\num{19,3676}) + \num{54,8933}] \\
+                &\approx \frac{3}{8} [\num{1,8419} + 3(\num{87,4704}) + \num{38,7352} + \num{54,8933}] \\
+                &\approx \frac{3}{8} [\num{1,8419} + \num{262,4112} + \num{38,7352} + \num{54,8933}] \\
+                &\approx \frac{3}{8} (\num{357,8816}) \\
+                &\approx \num{134,2056}
+            \end{align*}
         \end{itemize}
 
     \end{itemize}
